@@ -17,8 +17,6 @@ body{margin:0;padding:clamp(14px,3vw,32px);font-family:Arial,Helvetica,sans-seri
 main{width:min(100%,1320px);margin:0 auto;background:var(--card);padding:clamp(18px,3vw,30px);border-radius:14px;box-shadow:var(--shadow)}
 h1{margin:0 0 10px;color:var(--head);font-size:clamp(1.45rem,3vw,2rem);line-height:1.2}
 p{margin:0 0 18px;color:var(--muted)}
-.profile{border-left:4px solid var(--accent);padding:12px 16px;margin:18px 0 24px;background:#eef6fc;color:#1a3a4f;border-radius:0 10px 10px 0}
-.profile a{color:var(--accent)}
 .stats{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 24px}
 .stat{padding:8px 14px;border-radius:999px;background:#eef6fc;color:var(--head);font-size:.82rem;font-weight:600}
 .stat span{font-weight:400;color:var(--muted)}
@@ -62,10 +60,6 @@ p{margin:0 0 18px;color:var(--muted)}
 <main>
 <h1>English-First Businesses in Seville</h1>
 <p>Non-school businesses in Seville city. Updated 30 Jun 2026.</p>
-<div class="profile">
-<strong>Schools &amp; academies: <a href="https://github.com/V3RNE42/centros_compatibles" target="_blank" rel="noopener">centros_compatibles</a></strong><br/>
-<strong>Data:</strong> TranslatorsCafe, GuruWalk, Expat.com, Yelp, GitHub code search. Hotels verified via direct website checks. 51 more hotel candidates in HOTELS_CANDIDATES.md.
-</div>
 <div class="stats" id="stats"></div>
 <div class="legend" id="legend"></div>
 <div id="map"><div class="loader" id="loader"><div class="loader-track"><div class="loader-bar"></div><div class="loader-ball"></div></div><span class="loader-text">Loading map</span></div></div>
@@ -77,7 +71,6 @@ p{margin:0 0 18px;color:var(--muted)}
 <script>
 const C={Pub:"#c0392b",Hotel:"#256e9e",Tour:"#27ae60",Cowork:"#d4a017",Food:"#e67e22",Expat:"#8e44ad",Translation:"#16a085",Estate:"#2c3e50"};
 const D=[
-// === TRANSLATION (13) ===
 {n:1,name:"MOROTE TRADUCCIONES",c:"Translation",p:"954235638",w:"https://www.morote.net",a:"Seville",la:37.389,lo:-5.992},
 {n:2,name:"SÍLABA TRADUCCIONES",c:"Translation",p:"954318914",w:"https://www.silaba.es",a:"Seville",la:37.388,lo:-5.994},
 {n:3,name:"CBLingua — Traductores Jurados",c:"Translation",p:"955412916",w:"https://www.cblingua.com",a:"Seville",la:37.387,lo:-5.991},
@@ -90,34 +83,27 @@ const D=[
 {n:10,name:"Essenzia Traducciones",c:"Translation",p:"699665470",w:"https://www.essenziatraducciones.com",a:"Seville",la:37.381,lo:-5.993},
 {n:11,name:"ARROYO TRADUCCIONES",c:"Translation",p:"954577385",w:"https://www.arroyotraducciones.com",a:"Seville",la:37.380,lo:-5.992},
 {n:12,name:"Tradesende",c:"Translation",p:"955326417",w:"https://www.tradesende.com",a:"Seville",la:37.379,lo:-5.991},
-// === EXPAT (3) ===
 {n:13,name:"TrustedSeville",c:"Expat",p:"675987075",a:"C/ Pastor y Landero 7, 41001",la:37.388,lo:-5.999},
 {n:14,name:"Wolffinance",c:"Expat",p:"633722901",a:"Paseo Delicias, 41001",la:37.379,lo:-5.996},
 {n:15,name:"IN Consultoría",c:"Expat",p:"671541335",a:"C/ Astronomía 1",la:37.378,lo:-5.995},
-// === TOURS (7) ===
 {n:16,name:"White Umbrella Tours",c:"Tour",p:"692356398",w:"https://whiteumbrellatours.com",a:"Puerta Jerez — GuruWalk 4.96/5",la:37.382,lo:-5.993},
-{n:17,name:"Best Of Sevilla Tours",c:"Tour",a:"GuruWalk 4.95/5 from 4,831",la:37.388,lo:-5.995},
-{n:18,name:"Free Tours Sevilla",c:"Tour",a:"GuruWalk 4.85/5 from 4,900",la:37.387,lo:-5.994},
+{n:17,name:"Best Of Sevilla Tours",c:"Tour",a:"GuruWalk 4.95/5",la:37.388,lo:-5.995},
+{n:18,name:"Free Tours Sevilla",c:"Tour",a:"GuruWalk 4.85/5",la:37.387,lo:-5.994},
 {n:19,name:"Free Group Guides",c:"Tour",a:"GuruWalk Premium 4.94/5",la:37.386,lo:-5.993},
 {n:20,name:"Sevilla Free Tours",c:"Tour",a:"English walking tour",la:37.385,lo:-5.992},
 {n:21,name:"Hello Sevilla Tours",c:"Tour",a:"Monumental free tour",la:37.384,lo:-5.991},
 {n:22,name:"Fite Tours",c:"Tour",p:"661051371",w:"https://www.fitetours.com",a:"Seville city centre",la:37.388,lo:-5.996},
-// === FOOD (1) ===
 {n:23,name:"Taste of America",c:"Food",w:"https://tasteofamerica.es",a:"American food store",la:37.389,lo:-5.992},
-// === PUBS (3) ===
 {n:24,name:"The Merchant Pub",c:"Pub",a:"C/ Rafael González Abreu, 41001",la:37.390,lo:-6.000},
 {n:25,name:"O'Neill's Irish Pub",c:"Pub",a:"C/ Adriano, 41001",la:37.386,lo:-6.000},
 {n:26,name:"The Clan Scottish Pub",c:"Pub",a:"C/ Adriano 3, 41001",la:37.386,lo:-5.997},
-// === COWORKING (2) ===
 {n:27,name:"Arcadia Coworking",c:"Cowork",p:"654865194",w:"https://arcadiacoworking.com",a:"C/ Cuna 16, 41004",la:37.391,lo:-5.993},
 {n:28,name:"Gallo Rojo Coworking",c:"Cowork",w:"https://gallorojo.es",a:"C/ Madre María 9, 41003",la:37.395,lo:-5.991},
-// === HOTELS — LUXURY & 5★ (5) ===
 {n:29,name:"Hotel Alfonso XIII",c:"Hotel",p:"954917000",w:"https://www.marriott.com/es/hotels/svqlc-hotel-alfonso-xiii-a-luxury-collection-hotel-seville/",a:"C/ San Fernando 2, 41004 ★5",la:37.382,lo:-5.993},
 {n:30,name:"Gran Meliá Colón",c:"Hotel",w:"https://www.melia.com/es/hoteles/espana/sevilla/gran-melia-colon",a:"C/ Canalejas 1, 41001 ★5",la:37.391,lo:-5.999},
 {n:31,name:"Palacio de Villapanes",c:"Hotel",a:"C/ Santiago 31, 41003 ★5",la:37.392,lo:-5.986},
 {n:32,name:"Hospes Las Casas del Rey de Baeza",c:"Hotel",a:"C/ Santiago 32, 41003 ★5",la:37.392,lo:-5.987},
 {n:33,name:"Silken Al-Ándara Palace",c:"Hotel",p:"954421112",a:"Av. de la Palmera 55, 41012 ★5",la:37.366,lo:-5.978},
-// === HOTELS — 4★ (18) ===
 {n:34,name:"Hotel Inglaterra",c:"Hotel",p:"954224970",w:"https://www.hotelinglaterra.es",a:"Plaza Nueva 7, 41001 ★4",la:37.388,lo:-5.997},
 {n:35,name:"Meliá Sevilla",c:"Hotel",p:"954422011",w:"https://www.melia.com/es/hoteles/espana/sevilla/melia-sevilla",a:"C/ Dr. Pedro de Castro 1, 41004 ★4",la:37.378,lo:-5.986},
 {n:36,name:"Barceló Sevilla Renacimiento",c:"Hotel",p:"955420200",w:"https://www.barcelo.com",a:"Av. Álvaro Alonso Barba, Isla Cartuja ★4",la:37.408,lo:-5.997},
@@ -135,7 +121,6 @@ const D=[
 {n:48,name:"Hotel Exe Sevilla Palmera",c:"Hotel",p:"954421711",a:"Av. de la Palmera 57, 41012 ★4",la:37.365,lo:-5.977},
 {n:49,name:"Hotel Rey Alfonso X",c:"Hotel",a:"C/ Ximénez de Enciso 35, 41004 ★4",la:37.384,lo:-5.993},
 {n:50,name:"Hotel Alcázar",c:"Hotel",p:"954276200",w:"https://www.hotelalcazar.com",a:"Av. Menéndez Pelayo, 41004 ★3",la:37.383,lo:-5.987},
-// === HOTELS — 3★ (8) ===
 {n:51,name:"Hotel Amadeus",c:"Hotel",p:"954656200",w:"https://www.hoteles-amadeus.com",a:"C/ Farnesio 6, 41004 ★3",la:37.385,lo:-5.994},
 {n:52,name:"Hotel Doña María",c:"Hotel",p:"954225739",a:"C/ Don Remondo 19, 41004 ★3",la:37.384,lo:-5.992},
 {n:53,name:"Hotel América",c:"Hotel",p:"954220055",a:"C/ San José 19, 41004 ★3",la:37.389,lo:-5.993},
@@ -144,7 +129,6 @@ const D=[
 {n:56,name:"Hotel Maestranza",c:"Hotel",p:"954369470",a:"C/ Gamazo 12, 41001 ★3",la:37.385,lo:-5.998},
 {n:57,name:"Hotel Europa",c:"Hotel",p:"954221681",a:"C/ Placentines 8, 41004 ★3",la:37.386,lo:-5.994},
 {n:58,name:"Hotel Patio de la Alameda",c:"Hotel",p:"954290635",a:"C/ Céspedes 8, 41004 ★3",la:37.387,lo:-5.993},
-// === HOTELS — 2★ & BOUTIQUE (14) ===
 {n:59,name:"Hotel Simón",c:"Hotel",p:"954254544",a:"C/ García de Vinuesa 19, 41001 ★2",la:37.386,lo:-5.996},
 {n:60,name:"Hotel Ateneo",c:"Hotel",p:"954226002",a:"C/ Juan de Ávila 5, 41001 ★2",la:37.389,lo:-5.997},
 {n:61,name:"Hotel Murillo",c:"Hotel",p:"954264800",a:"C/ Deán Pegalajar 3, 41004 ★2",la:37.383,lo:-5.986},
@@ -159,22 +143,17 @@ const D=[
 {n:70,name:"Hotel San Gil",c:"Hotel",p:"954190681",a:"C/ San Isidoro 13, 41004 ★3",la:37.388,lo:-5.994},
 {n:71,name:"Hotel Adriano",c:"Hotel",p:"954246300",a:"C/ Adriano, 41001 ★3",la:37.387,lo:-6.000},
 {n:72,name:"Hotel Marques de Yanduri",c:"Hotel",a:"C/ Adriano 12, 41001 ★3",la:37.385,lo:-5.998},
-// === HOTELS — SERVICED APARTMENTS (3) ===
 {n:73,name:"Hotel Legado Magdalena",c:"Hotel",a:"C/ San Pablo 12, 41004 (Boutique)",la:37.389,lo:-5.998},
 {n:74,name:"Hotel Posada del Lucero",c:"Hotel",a:"C/ Almirante Apodaca 6, 41001 (Boutique)",la:37.387,lo:-5.997},
 {n:75,name:"Hotel Casa del Poeta",c:"Hotel",a:"C/ Dean Miranda 7, 41004 (Boutique)",la:37.385,lo:-5.991},
 ];
-// Stats
 const counts={};D.forEach(d=>{counts[d.c]=(counts[d.c]||0)+1});const st=document.getElementById("stats");Object.entries(counts).forEach(([k,v])=>{const e=document.createElement("div");e.className="stat";e.innerHTML=`${k} <span>${v}</span>`;st.appendChild(e)});
-// Legend
 const lg=document.getElementById("legend");Object.entries(C).forEach(([k,v])=>{const e=document.createElement("div");e.className="legend-item";e.innerHTML=`<span class="legend-dot" style="background:${v}"></span>${k}`;lg.appendChild(e)});
-// Cards
 const g=document.getElementById("cards");const t=document.getElementById("toast");let tid;
 D.forEach(d=>{
 const bg=C[d.c]||"#256e9e";const cr=document.createElement("div");cr.className="crd";
 cr.innerHTML=`<div class="bd"><div class="nn"><span class="num" style="background:${bg}">${d.n}</span> ${d.name} <span class="tag tg-${d.c}">${d.c}</span></div>${d.p?`<div class="ph"><strong>📞</strong> ${d.p}</div>`:""}<div class="ad">${d.a||""}</div><div class="lk">${d.w?`<a class="chp" href="${d.w}" target="_blank" rel="noopener">${d.w.replace(/https?:\/\//,'').replace(/\/.*/,'')}</a>`:'<span class="chp nd">no website</span>'}</div></div>`;
 g.appendChild(cr)});
-// Map
 const me=document.getElementById("map");if(me&&typeof L!=="undefined"){
 const m=L.map(me,{scrollWheelZoom:false}).setView([37.385,-5.987],13);
 L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>, CARTO',subdomains:"abc"}).addTo(m);
