@@ -2,15 +2,9 @@
 
 <html lang="en">
 <head>
-<!--
-    English-First Businesses in Seville (non-school).
-    Schools & academies: see V3RNE42/centros_compatibles.
-    This repo: pubs, hotels, tours, coworking, food stores, expat services, etc.
-    Updated: 30 June 2026 — 26 verified entries across 7 categories.
-  -->
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>English-First Businesses in Seville — Non-School Directory</title>
+<title>English-First Businesses in Seville</title>
 <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
 <link href="favicon.ico" rel="icon" sizes="16x16"/>
 <link href="favicon-32.png" rel="icon" sizes="32x32" type="image/png"/>
@@ -18,622 +12,130 @@
 <link href="https://b.basemaps.cartocdn.com" rel="preconnect"/>
 <link href="https://c.basemaps.cartocdn.com" rel="preconnect"/>
 <style>
-      :root {
-        --bg: #f0f5fa;
-        --card: #ffffff;
-        --text: #1f2937;
-        --muted: #5b6472;
-        --line: #d7dce5;
-        --head: #0a3d5c;
-        --accent: #256e9e;
-        --accent-dark: #1a4f73;
-        --success: #0f7a43;
-        --shadow: 0 8px 28px rgba(16, 24, 40, 0.08);
-      }
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        padding: clamp(14px, 3vw, 32px);
-        font-family: Arial, Helvetica, sans-serif;
-        background: var(--bg);
-        color: var(--text);
-        line-height: 1.5;
-      }
-      main {
-        width: min(100%, 1320px);
-        margin: 0 auto;
-        background: var(--card);
-        padding: clamp(18px, 3vw, 30px);
-        border-radius: 14px;
-        box-shadow: var(--shadow);
-      }
-      h1 {
-        margin: 0 0 10px;
-        color: var(--head);
-        font-size: clamp(1.45rem, 3vw, 2rem);
-        line-height: 1.2;
-      }
-      p { margin: 0 0 18px; color: var(--muted); }
-      .profile {
-        border-left: 4px solid var(--accent);
-        padding: 12px 16px;
-        margin: 18px 0 24px;
-        background: #eef6fc;
-        color: #1a3a4f;
-        border-radius: 0 10px 10px 0;
-      }
-      .profile strong { display: block; margin-bottom: 6px; }
-      .section-tag {
-        display: inline-block;
-        padding: 3px 10px;
-        margin: 0 6px 6px 0;
-        border-radius: 999px;
-        background: #e0ecf5;
-        color: var(--accent-dark);
-        font-size: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.03em;
-      }
-      .pending-tag {
-        background: #fef0e6;
-        color: #b4550e;
-      }
-      .cat-header {
-        margin: 28px 0 14px;
-        padding-bottom: 8px;
-        border-bottom: 2px solid var(--line);
-        font-size: clamp(1.1rem, 2vw, 1.4rem);
-        color: var(--head);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .cat-header .count {
-        font-size: 0.8rem;
-        font-weight: 400;
-        color: var(--muted);
-        background: var(--bg);
-        padding: 2px 10px;
-        border-radius: 999px;
-      }
-      .map-section {
-        margin-top: 30px;
-        padding-top: 24px;
-        border-top: 1px solid var(--line);
-      }
-      .map-section h2 {
-        margin: 0 0 10px;
-        color: var(--head);
-        font-size: clamp(1.25rem, 2.4vw, 1.65rem);
-        line-height: 1.25;
-      }
-      #seville-map {
-        min-height: 520px;
-        width: 100%;
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        overflow: hidden;
-        background: #edf2f7;
-        box-shadow: 0 4px 16px rgba(16, 24, 40, 0.06);
-        position: relative;
-      }
-      .map-loader {
-        position: absolute;
-        inset: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: #edf2f7;
-        z-index: 9999;
-        border-radius: 14px;
-        transition: opacity 0.5s ease;
-      }
-      .map-loader.is-hidden { opacity: 0; pointer-events: none; }
-      .map-loader-track { width: 200px; height: 6px; background: #d0d7e2; border-radius: 3px; overflow: hidden; position: relative; }
-      .map-loader-bar { height: 100%; width: 100%; background: linear-gradient(90deg, var(--accent), #5bb4ff); border-radius: 3px; transform: translateX(-100%); animation: loader-fill 2s ease-in-out infinite; }
-      .map-loader-thrower { position: absolute; top: 50%; width: 14px; height: 14px; background: var(--accent-dark); border-radius: 50%; transform: translate(-50%, -50%); animation: loader-throw 2s ease-in-out infinite; box-shadow: 0 0 8px rgba(37, 110, 158, 0.5); }
-      .map-loader-text { margin-top: 18px; font-size: 0.9rem; color: var(--muted); letter-spacing: 0.02em; }
-      @keyframes loader-fill {
-        0%   { transform: translateX(-100%); }
-        50%  { transform: translateX(-40%); }
-        100% { transform: translateX(100%); }
-      }
-      @keyframes loader-throw {
-        0%   { left: 0%; }
-        50%  { left: 60%; }
-        100% { left: 100%; }
-      }
-      .map-fallback { margin-top: 10px; font-size: 0.86rem; color: var(--muted); }
-      .cards-section { margin-top: 0; padding-top: 16px; }
-      .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
-      .business-card {
-        display: flex; gap: 12px; padding: 14px;
-        border: 1px solid var(--line); border-radius: 12px;
-        background: #ffffff;
-        box-shadow: 0 2px 8px rgba(16, 24, 40, 0.04);
-        transition: box-shadow 0.15s ease;
-      }
-      .business-card:hover { box-shadow: 0 4px 16px rgba(16, 24, 40, 0.08); }
-      .card-number {
-        display: inline-flex; align-items: center; justify-content: center;
-        width: 22px; height: 22px; border-radius: 999px;
-        background: var(--accent); color: #ffffff;
-        font-weight: 700; font-size: 0.75rem; line-height: 1;
-        margin-right: 5px; vertical-align: middle; flex-shrink: 0;
-      }
-      .card-body { flex: 1; min-width: 0; }
-      .card-name { font-weight: 700; color: var(--head); font-size: 0.95rem; line-height: 1.3; margin-bottom: 4px; }
-      .card-addr { font-size: 0.85rem; color: var(--muted); line-height: 1.35; margin-bottom: 8px; }
-      .card-phone { font-size: 0.85rem; color: var(--muted); line-height: 1.35; margin-bottom: 6px; }
-      .card-phone strong { color: var(--head); }
-      .card-links { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-      .link-chip, .email-chip {
-        display: inline-flex; align-items: center; max-width: 100%;
-        padding: 5px 10px; border: 1px solid #c9ddff;
-        border-radius: 999px; background: #f8fbff;
-        font-size: 0.82rem; line-height: 1.2; white-space: nowrap;
-      }
-      .link-chip { color: var(--accent); text-decoration: none; }
-      .link-chip:hover { background: #eaf2ff; }
-      .email-chip {
-        cursor: pointer; color: var(--accent-dark); user-select: none;
-        transition: background 140ms ease, border-color 140ms ease;
-      }
-      .email-chip:hover { background: #eaf2ff; border-color: var(--accent); }
-      .no-data-chip { background: #f7f8fb; color: #999; border-color: #ddd; cursor: default; }
-      .map-marker-number {
-        display: inline-flex; align-items: center; justify-content: center;
-        width: 32px; height: 32px; border-radius: 999px;
-        background: var(--accent); color: #ffffff;
-        font-weight: 700; font-size: 0.86rem; line-height: 1;
-        border: 2px solid #ffffff;
-        box-shadow: 0 2px 10px rgba(15, 55, 99, 0.35);
-      }
-      @media (max-width: 760px) {
-        main { padding: 16px; }
-        .cards-grid { grid-template-columns: 1fr; gap: 10px; }
-        #seville-map { min-height: 420px; }
-      }
-    </style>
+:root{--bg:#f0f5fa;--card:#fff;--text:#1f2937;--muted:#5b6472;--line:#d7dce5;--head:#0a3d5c;--accent:#256e9e;--success:#0f7a43;--shadow:0 8px 28px rgba(16,24,40,0.08);--pub:#c0392b;--hotel:#256e9e;--tour:#27ae60;--cowork:#d4a017;--food:#e67e22;--expat:#8e44ad;--translation:#16a085;--medical:#c0392b;--estate:#2c3e50}
+*{box-sizing:border-box}
+body{margin:0;padding:clamp(14px,3vw,32px);font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+main{width:min(100%,1320px);margin:0 auto;background:var(--card);padding:clamp(18px,3vw,30px);border-radius:14px;box-shadow:var(--shadow)}
+h1{margin:0 0 10px;color:var(--head);font-size:clamp(1.45rem,3vw,2rem);line-height:1.2}
+p{margin:0 0 18px;color:var(--muted)}
+.profile{border-left:4px solid var(--accent);padding:12px 16px;margin:18px 0 24px;background:#eef6fc;color:#1a3a4f;border-radius:0 10px 10px 0}
+.profile a{color:var(--accent)}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 24px}
+.stat{padding:8px 14px;border-radius:999px;background:#eef6fc;color:var(--head);font-size:.82rem;font-weight:600}
+.stat span{font-weight:400;color:var(--muted)}
+.tag{display:inline-block;padding:3px 10px;margin:0 6px 6px 0;border-radius:999px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:#fff}
+.tg-Pub{background:var(--pub)}.tg-Hotel{background:var(--hotel)}.tg-Tour{background:var(--tour)}.tg-Cowork{background:var(--cowork)}.tg-Food{background:var(--food)}.tg-Expat{background:var(--expat)}.tg-Translation{background:var(--translation)}.tg-Medical{background:var(--medical)}.tg-Estate{background:var(--estate)}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:.82rem;color:var(--muted)}
+.legend-dot{width:14px;height:14px;border-radius:999px;flex-shrink:0}
+#map{min-height:520px;width:100%;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#edf2f7;box-shadow:0 4px 16px rgba(16,24,40,.06);position:relative}
+.loader{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#edf2f7;z-index:9999;border-radius:14px;transition:opacity .5s}
+.loader.hide{opacity:0;pointer-events:none}
+.loader-track{width:200px;height:6px;background:#d0d7e2;border-radius:3px;overflow:hidden;position:relative}
+.loader-bar{height:100%;width:100%;background:linear-gradient(90deg,var(--accent),#5bb4ff);border-radius:3px;transform:translateX(-100%);animation:fill 2s ease-in-out infinite}
+.loader-ball{position:absolute;top:50%;width:14px;height:14px;background:#1a4f73;border-radius:50%;transform:translate(-50%,-50%);animation:ball 2s ease-in-out infinite;box-shadow:0 0 8px rgba(37,110,158,.5)}
+@keyframes fill{0%{transform:translateX(-100%)}50%{transform:translateX(-40%)}100%{transform:translateX(100%)}}
+@keyframes ball{0%{left:0%}50%{left:60%}100%{left:100%}}
+.fallback{margin-top:10px;font-size:.86rem;color:var(--muted)}
+.cards{padding-top:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.crd{display:flex;gap:12px;padding:14px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:0 2px 8px rgba(16,24,40,.04);transition:box-shadow .15s}
+.crd:hover{box-shadow:0 4px 16px rgba(16,24,40,.08)}
+.num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:999px;color:#fff;font-weight:700;font-size:.75rem;line-height:1;margin-right:5px;vertical-align:middle;flex-shrink:0}
+.bd{flex:1;min-width:0}
+.nn{font-weight:700;color:var(--head);font-size:.95rem;line-height:1.3;margin-bottom:4px}
+.ad{font-size:.85rem;color:var(--muted);line-height:1.35;margin-bottom:4px}
+.ph{font-size:.85rem;color:var(--muted);line-height:1.35;margin-bottom:6px}
+.ph strong{color:var(--head)}
+.lk{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chp,.em{display:inline-flex;align-items:center;max-width:100%;padding:5px 10px;border:1px solid #c9ddff;border-radius:999px;background:#f8fbff;font-size:.82rem;line-height:1.2;white-space:nowrap}
+.chp{color:var(--accent);text-decoration:none}
+.chp:hover{background:#eaf2ff}
+.em{cursor:pointer;color:#1a4f73;user-select:none;transition:background 140ms,border-color 140ms}
+.em:hover{background:#eaf2ff;border-color:var(--accent)}
+.nd{background:#f7f8fb;color:#999;border-color:#ddd;cursor:default}
+.toast{position:fixed;right:clamp(14px,3vw,28px);bottom:clamp(14px,3vw,28px);z-index:9999;max-width:min(420px,calc(100vw-28px));padding:13px 16px;border-radius:12px;background:#102a43;color:#fff;box-shadow:0 12px 34px rgba(16,42,67,.28);font-size:.95rem;opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity 180ms,transform 180ms}
+.toast.show{opacity:1;transform:translateY(0)}.toast.ok{background:var(--success)}.toast.er{background:#a61b1b}
+@media(max-width:760px){main{padding:16px}.grid{grid-template-columns:1fr;gap:10px}#map{min-height:420px}}
+</style>
 </head>
 <body>
 <main>
 <h1>English-First Businesses in Seville</h1>
-<p>
-        A directory of non-school businesses in Seville city (41001–41020)
-        that operate primarily in English or cater to English speakers.
-        Last updated: 30 June 2026 — <strong>28 verified entries</strong>.
-      </p>
+<p>Non-school businesses in Seville city. Updated 30 Jun 2026.</p>
 <div class="profile">
-<strong>⚠️ Schools and language academies are NOT included here.</strong>
-        They are covered in <a href="https://github.com/V3RNE42/centros_compatibles" target="_blank" rel="noopener">centros_compatibles</a>
-        (30 education centres with verified contact data).
-        <br><br>
-        <strong>Scope of this directory:</strong> British/Irish pubs, hotels,
-        tourist guides, coworking studios, international food stores,
-        expat services, translation, English-speaking medical/dental,
-        and real estate agencies.
-      </div>
-
-<section aria-labelledby="map-title" class="map-section">
-<h2 id="map-title">Map — 21 locations with GPS coordinates</h2>
-<p>Click markers for details. Some entries have city-level GPS only.</p>
-<div class="map-layout-full">
-<div id="seville-map">
-  <div class="map-loader" id="map-loader">
-    <div class="map-loader-track">
-      <div class="map-loader-bar"></div>
-      <div class="map-loader-thrower"></div>
-    </div>
-    <span class="map-loader-text">Loading map</span>
-  </div>
+<strong>Schools &amp; academies: <a href="https://github.com/V3RNE42/centros_compatibles" target="_blank" rel="noopener">centros_compatibles</a></strong><br/>
+<strong>Data:</strong> TranslatorsCafe (13 agencies), GuruWalk (8 tours), Expat.com, Yelp, GitHub code search.
 </div>
-<p class="map-fallback">If the map tiles do not load, check your connection; the numbered list is below.</p>
-</div>
-</section>
-
-<section aria-labelledby="cards-title" class="cards-section">
-<h2 id="cards-title">Verified Businesses</h2>
-
-<h3 class="cat-header">🍺 Pubs &amp; Bars <span class="count">5</span></h3>
-<div class="cards-grid">
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">1</span> The Merchant <span class="section-tag">Pub</span></div>
-    <div class="card-addr">Calle Rafael González Abreu, Casco Antiguo, 41001</div>
-    <div class="card-links"><span class="link-chip no-data-chip">contact info TBC</span></div>
-  </div>
-</div>
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">2</span> O'Neill's Irish Pub <span class="section-tag">Pub</span></div>
-    <div class="card-addr">Calle Adriano, El Arenal, 41001</div>
-    <div class="card-links"><span class="link-chip no-data-chip">contact info TBC</span></div>
-  </div>
-</div>
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">3</span> The Clan Scottish Pub <span class="section-tag">Pub</span></div>
-    <div class="card-addr">Calle Adriano, 3, El Arenal, 41001</div>
-    <div class="card-links"><span class="link-chip no-data-chip">contact info TBC</span></div>
-  </div>
-</div>
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">4</span> O'Neill's Pub <span class="section-tag">Pub</span></div>
-    <div class="card-addr">Calle Balbino Marrón, Nervión, 41018</div>
-    <div class="card-links"><span class="link-chip no-data-chip">contact info TBC</span></div>
-  </div>
-</div>
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">5</span> The Boss Café &amp; Copas <span class="section-tag">Pub</span></div>
-    <div class="card-addr">Calle Procurador, 27, Los Remedios, 41010</div>
-    <div class="card-links"><span class="link-chip no-data-chip">contact info TBC</span></div>
-  </div>
-</div>
-
-</div>
-
-<h3 class="cat-header">🗺️ Tour Operators <span class="count">3</span></h3>
-<div class="cards-grid">
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">6</span> White Umbrella Tours Sevilla <span class="section-tag">Tour</span></div>
-    <div class="card-addr">Meeting point: Puerta Jerez (fountain), 41004</div>
-    <div class="card-phone"><strong>📞</strong> +34 692 35 63 98</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://whiteumbrellatours.com/en/" rel="noopener" target="_blank">whiteumbrellatours.com</a>
-      <span class="email-chip" onclick="copyEmail('infosevilla@whiteumbrellatours.com',event)">✉ infosevilla</span>
-    </div>
-  </div>
-</div>
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">7</span> Fite Tours <span class="section-tag">Tour</span></div>
-    <div class="card-addr">Seville city centre</div>
-    <div class="card-phone"><strong>📞</strong> +34 661 05 13 71</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://www.fitetours.com/en/home_en/" rel="noopener" target="_blank">fitetours.com</a>
-      <span class="email-chip" onclick="copyEmail('fitetours@gmail.com',event)">✉ fitetours</span>
-    </div>
-  </div>
-</div>
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">8</span> Best Of Sevilla Tour <span class="section-tag">Tour</span></div>
-    <div class="card-addr">Seville city centre — free walking tour, 4800+ reviews on GuruWalk</div>
-    <div class="card-links"><span class="link-chip no-data-chip">listing on GuruWalk / FreeTour.com</span></div>
-  </div>
-</div>
-
-</div>
-
-<h3 class="cat-header">🏨 Hotels <span class="count">6</span></h3>
-<div class="cards-grid">
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">9</span> Hotel Alfonso XIII <span class="section-tag">Hotel</span><span class="section-tag pending-tag">5★</span></div>
-    <div class="card-addr">Calle Doña María de Padilla, Santa Cruz, 41004</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://www.marriott.com/es/hotels/svqlc-hotel-alfonso-xiii-a-luxury-collection-hotel-seville/overview/" rel="noopener" target="_blank">Marriott</a>
-    </div>
-  </div>
-</div>
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">10</span> Hotel Gran Meliá Colón <span class="section-tag">Hotel</span><span class="section-tag pending-tag">5★</span></div>
-    <div class="card-addr">Calle Canalejas, Casco Antiguo, 41001</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://www.melia.com/en/hotels/spain/seville/gran-melia-colon/index.html" rel="noopener" target="_blank">Meliá</a>
-    </div>
-  </div>
-</div>
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">11</span> Hotel Inglaterra <span class="section-tag">Hotel</span><span class="section-tag pending-tag">4★</span></div>
-    <div class="card-addr">Plaza Nueva, 7, El Arenal, 41001</div>
-    <div class="card-phone"><strong>📞</strong> +34 954 22 49 70</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://www.hotelinglaterra.es/" rel="noopener" target="_blank">hotelinglaterra.es</a>
-      <span class="email-chip" onclick="copyEmail('info@hotelinglaterra.es',event)">✉ info</span>
-      <span class="email-chip" onclick="copyEmail('reservas@hotelinglaterra.es',event)">✉ reservas</span>
-    </div>
-  </div>
-</div>
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">12</span> Hotel Alcázar <span class="section-tag">Hotel</span><span class="section-tag pending-tag">3★</span></div>
-    <div class="card-addr">Av. Menéndez Pelayo, San Bernardo, 41004</div>
-    <div class="card-links"><span class="link-chip no-data-chip">website TBC</span></div>
-  </div>
-</div>
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">13</span> Palacio de Villapanes <span class="section-tag">Hotel</span></div>
-    <div class="card-addr">Calle Santiago, Santa Catalina, Casco Antiguo, 41003</div>
-    <div class="card-links"><span class="link-chip no-data-chip">website TBC</span></div>
-  </div>
-</div>
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">14</span> Las Casas de El Arenal <span class="section-tag">Hotel</span></div>
-    <div class="card-addr">Calle Castelar, 16, El Arenal, 41001</div>
-    <div class="card-links"><span class="link-chip no-data-chip">website TBC</span></div>
-  </div>
-</div>
-
-</div>
-
-<h3 class="cat-header">💻 Coworking <span class="count">4</span></h3>
-<div class="cards-grid">
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">15</span> Arcadia Coworking <span class="section-tag">Coworking</span></div>
-    <div class="card-addr">Calle Cuna 16, 1ª planta, 41004</div>
-    <div class="card-phone"><strong>📞</strong> +34 654 865 194 / +34 651 524 944</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://arcadiacoworking.com/" rel="noopener" target="_blank">arcadiacoworking.com</a>
-      <span class="email-chip" onclick="copyEmail('info@arcadiacoworking.com',event)">✉ info</span>
-    </div>
-  </div>
-</div>
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">16</span> Gallo Rojo <span class="section-tag">Coworking</span></div>
-    <div class="card-addr">C/ Madre María de la Purísima, 9, 41003</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://gallorojo.es/" rel="noopener" target="_blank">gallorojo.es</a>
-      <span class="email-chip" onclick="copyEmail('gallorojo@gallorojo.es',event)">✉ gallorojo</span>
-    </div>
-  </div>
-</div>
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">17</span> INN Offices <span class="section-tag">Coworking</span></div>
-    <div class="card-addr">C/ Leonardo Da Vinci 20, Cartuja, 41092 (6 locations)</div>
-    <div class="card-phone"><strong>📞</strong> +34 955 28 00 34</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://innoffices.es/" rel="noopener" target="_blank">innoffices.es</a>
-      <span class="email-chip" onclick="copyEmail('info@innoffices.es',event)">✉ info</span>
-    </div>
-  </div>
-</div>
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">18</span> Spaces (IWG/Regus) <span class="section-tag">Coworking</span></div>
-    <div class="card-addr">Seville city centre</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://www.spacesworks.com/locations/spain/seville/" rel="noopener" target="_blank">spacesworks.com</a>
-    </div>
-  </div>
-</div>
-
-</div>
-
-<h3 class="cat-header">🍔 International Food <span class="count">1</span></h3>
-<div class="cards-grid">
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">19</span> Taste of America <span class="section-tag">Food</span></div>
-    <div class="card-addr">Seville — American food products (verified online store)</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://tasteofamerica.es" rel="noopener" target="_blank">tasteofamerica.es</a>
-      <span class="link-chip no-data-chip">📞 contact via website</span>
-    </div>
-  </div>
-</div>
-
-</div>
-
-<h3 class="cat-header">📋 Expat Services <span class="count">6</span></h3>
-<div class="cards-grid">
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">20</span> TrustedSeville <span class="section-tag">Expat</span></div>
-    <div class="card-addr">Calle Pastor y Landero, 7, 41001</div>
-    <div class="card-phone"><strong>📞</strong> +34 675 987 075</div>
-    <div class="card-links">
-      <span class="link-chip no-data-chip">Ross Hamilton — relocation services</span>
-    </div>
-  </div>
-</div>
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">21</span> movetosevilla.com <span class="section-tag">Expat</span></div>
-    <div class="card-addr">Calle Felipe II, 13, Seville</div>
-    <div class="card-phone"><strong>📞</strong> +34 955 329 400</div>
-    <div class="card-links">
-      <span class="link-chip no-data-chip">Kevin Whalen — relocation agency</span>
-    </div>
-  </div>
-</div>
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">22</span> Relocations Sevilla Center <span class="section-tag">Expat</span></div>
-    <div class="card-addr">Av. San Francisco Javier, 24, Seville</div>
-    <div class="card-phone"><strong>📞</strong> +34 678 777 761</div>
-    <div class="card-links"><span class="link-chip no-data-chip">relocation services</span></div>
-  </div>
-</div>
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">23</span> Llucia Abogados <span class="section-tag">Expat</span></div>
-    <div class="card-addr">Plaza Godines, 4, Seville</div>
-    <div class="card-phone"><strong>📞</strong> +34 618 717 574</div>
-    <div class="card-links"><span class="link-chip no-data-chip">David Llucia — English-speaking law firm</span></div>
-  </div>
-</div>
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">24</span> Tatiana Vialaret <span class="section-tag">Expat</span></div>
-    <div class="card-addr">C/ Baños 58, Seville</div>
-    <div class="card-phone"><strong>📞</strong> +34 663 411 689</div>
-    <div class="card-links"><span class="link-chip no-data-chip">immigration consultant</span></div>
-  </div>
-</div>
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">25</span> Wolffinance <span class="section-tag">Expat</span></div>
-    <div class="card-addr">Edificio Cristina, Paseo de las Delicias, 41001</div>
-    <div class="card-phone"><strong>📞</strong> +34 633 722 901</div>
-    <div class="card-links"><span class="link-chip no-data-chip">Benjamin Amo — financial advisor for expats</span></div>
-  </div>
-</div>
-
-</div>
-
-<h3 class="cat-header">🌐 Translation & Interpretation <span class="count">1</span></h3>
-<div class="cards-grid">
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">27</span> Alfonso Amo <span class="section-tag">Translator</span></div>
-    <div class="card-addr">C/ Mulhacén 5, 2º Der., 41005 Sevilla</div>
-    <div class="card-phone"><strong>📞</strong> +34 656 41 94 38</div>
-    <div class="card-links"><span class="link-chip no-data-chip">EN>ES translation, editing, proofreading, subtitling</span></div>
-  </div>
-</div>
-
-</div>
-<p class="map-fallback" style="margin-top:10px"><strong>📋 More translators:</strong> 162 EN>ES translators listed in Seville on <a href="https://www.translatorscafe.com/tcutils/EN/search/?city=Seville&country=ES&lg=148&ls=42" target="_blank" rel="noopener">TranslatorsCafe.com</a>. Verified individuals include Carmen Álvarez Benítez, Margarita Andreu, Amaya Arroyo, David Bernal, and 20+ others. Only those with public contact info are listed below.</p>
-
-<h3 class="cat-header">🏠 Real Estate (English-speaking) <span class="count">1</span></h3>
-<div class="cards-grid">
-
-<div class="business-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">28</span> Engel &amp; Völkers Seville <span class="section-tag">Real Estate</span></div>
-    <div class="card-addr">Seville city centre</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://www.engelvoelkers.com/es/en/real-estate-agent/andalusia/seville" rel="noopener" target="_blank">engelvoelkers.com</a>
-      <span class="link-chip no-data-chip">📞 contact via website</span>
-    </div>
-  </div>
-</div>
-
-</div>
-
-</section>
+<div class="stats" id="stats"></div>
+<div class="legend" id="legend"></div>
+<div id="map"><div class="loader" id="loader"><div class="loader-track"><div class="loader-bar"></div><div class="loader-ball"></div></div><span class="loader-text">Loading map</span></div></div>
+<p class="fallback">Map not loading? The cards below have all data.</p>
+<section class="cards"><h2>33 Verified Entries</h2><div class="grid" id="cards"></div></section>
 </main>
-
-<div aria-live="polite" class="toast" id="toast" role="status"></div>
+<div class="toast" id="toast"></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-      const mapLocations = [
-        { number: 1, name: "The Merchant", area: "Casco Antiguo", lat: 37.390582, lng: -6.000093, cat: "Pub" },
-        { number: 2, name: "O'Neill's Irish Pub", area: "El Arenal", lat: 37.386770, lng: -6.000036, cat: "Pub" },
-        { number: 3, name: "The Clan Scottish Pub", area: "El Arenal", lat: 37.386186, lng: -5.997000, cat: "Pub" },
-        { number: 4, name: "O'Neill's Pub", area: "Nervión", lat: 37.378724, lng: -5.978435, cat: "Pub" },
-        { number: 5, name: "The Boss Café & Copas", area: "Los Remedios", lat: 37.386868, lng: -6.007436, cat: "Pub" },
-        { number: 6, name: "White Umbrella Tours", area: "Puerta Jerez", lat: 37.382446, lng: -5.993189, cat: "Tour" },
-        { number: 7, name: "Fite Tours", area: "City Centre", lat: 37.3886, lng: -5.9953, cat: "Tour" },
-        { number: 8, name: "Best Of Sevilla Tour", area: "City Centre", lat: 37.3886, lng: -5.9953, cat: "Tour" },
-        { number: 9, name: "Hotel Alfonso XIII", area: "Santa Cruz", lat: 37.381517, lng: -5.992719, cat: "Hotel" },
-        { number: 10, name: "Hotel Gran Meliá Colón", area: "Casco Antiguo", lat: 37.390851, lng: -5.998708, cat: "Hotel" },
-        { number: 11, name: "Hotel Inglaterra", area: "Plaza Nueva", lat: 37.388307, lng: -5.996538, cat: "Hotel" },
-        { number: 12, name: "Hotel Alcázar", area: "San Bernardo", lat: 37.383362, lng: -5.987042, cat: "Hotel" },
-        { number: 13, name: "Palacio de Villapanes", area: "Casco Antiguo", lat: 37.391578, lng: -5.986392, cat: "Hotel" },
-        { number: 14, name: "Las Casas de El Arenal", area: "El Arenal", lat: 37.387078, lng: -5.996704, cat: "Hotel" },
-        { number: 15, name: "Arcadia Coworking", area: "Casco Antiguo", lat: 37.391710, lng: -5.993700, cat: "Coworking" },
-        { number: 16, name: "Gallo Rojo", area: "Casco Antiguo", lat: 37.395421, lng: -5.991756, cat: "Coworking" },
-        { number: 17, name: "INN Offices", area: "Cartuja", lat: 37.410, lng: -5.995, cat: "Coworking" },
-        { number: 18, name: "Spaces (IWG)", area: "City Centre", lat: 37.39298, lng: -5.99396, cat: "Coworking" },
-        { number: 19, name: "Taste of America", area: "Seville", lat: 37.389, lng: -5.992, cat: "Food" },
-        { number: 20, name: "TrustedSeville", area: "City Centre", lat: 37.388139, lng: -5.999821, cat: "Expat" },
-        { number: 21, name: "movetosevilla.com", area: "Seville", lat: 37.3886, lng: -5.9953, cat: "Expat" },
-        { number: 22, name: "Relocations Sevilla Center", area: "Seville", lat: 37.3886, lng: -5.9953, cat: "Expat" },
-        { number: 23, name: "Llucia Abogados", area: "Seville", lat: 37.3886, lng: -5.9953, cat: "Expat" },
-        { number: 24, name: "Tatiana Vialaret", area: "Seville", lat: 37.3886, lng: -5.9953, cat: "Expat" },
-        { number: 25, name: "Wolffinance", area: "Paseo Delicias", lat: 37.379, lng: -5.996, cat: "Expat" },
-        { number: 26, name: "Engel & Völkers", area: "City Centre", lat: 37.3886, lng: -5.9953, cat: "Real Estate" },
-        { number: 27, name: "Alfonso Amo (Translator)", area: "Sevilla Este", lat: 37.372, lng: -5.955, cat: "Translation" },
-      ];
-
-      const catColors = {
-        "Pub": "#d13f3f",
-        "Tour": "#2e8b57",
-        "Hotel": "#256e9e",
-        "Coworking": "#b8860b",
-        "Food": "#c75000",
-        "Expat": "#6b3fa0",
-        "Real Estate": "#1a7a5c",
-        "Translation": "#cd5c5c",
-      };
-
-      function initMap() {
-        const c = document.getElementById("seville-map");
-        if (!c || typeof L === "undefined") return;
-        const m = L.map(c, { scrollWheelZoom: false }).setView([37.389, -5.995], 13);
-        const tl = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-          maxZoom: 19,
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/">CARTO</a>',
-          subdomains: "abc",
-        });
-        let h = false;
-        function hl() { if (!h) { h = true; const l = document.getElementById("map-loader"); if (l) l.classList.add("is-hidden"); } }
-        m.on("tileload", hl); m.on("tileerror", hl);
-        tl.addTo(m);
-        setTimeout(hl, 3000);
-        const b = [];
-        mapLocations.forEach((l) => {
-          const bg = catColors[l.cat] || "#256e9e";
-          const icon = L.divIcon({
-            className: "",
-            html: `<span style="background:${bg}">${l.number}</span>`,
-            iconSize: [32, 32],
-            iconAnchor: [16, 16],
-            popupAnchor: [0, -18],
-          });
-          L.marker([l.lat, l.lng], { icon }).addTo(m).bindPopup(`<strong>${l.number}. ${l.name}</strong><br>${l.area}`);
-          b.push([l.lat, l.lng]);
-        });
-        m.fitBounds(b, { padding: [32, 32] });
-      }
-      initMap();
-
-      function copyEmail(e, ev) {
-        const t = document.getElementById("toast");
-        if (!t) return;
-        try {
-          navigator.clipboard.writeText(e).then(() => {
-            t.textContent = "✅ " + e + " copied!";
-            t.className = "toast is-visible is-success";
-            setTimeout(() => { t.className = "toast"; }, 1800);
-          });
-        } catch (_) {
-          t.textContent = "❌ Could not copy";
-          t.className = "toast is-visible is-error";
-          setTimeout(() => { t.className = "toast"; }, 1800);
-        }
-      }
-    </script>
+const C={Pub:"#c0392b",Hotel:"#256e9e",Tour:"#27ae60",Cowork:"#d4a017",Food:"#e67e22",Expat:"#8e44ad",Translation:"#16a085",Medical:"#c0392b",Estate:"#2c3e50"};
+const D=[
+{n:1,name:"MOROTE TRADUCCIONES",c:"Translation",p:"954235638",w:"https://www.morote.net",a:"Seville",la:37.389,lo:-5.992},
+{n:2,name:"SÍLABA TRADUCCIONES",c:"Translation",p:"954318914",w:"https://www.silaba.es",a:"Seville",la:37.388,lo:-5.994},
+{n:3,name:"CBLingua — Traductores Jurados",c:"Translation",p:"955412916",w:"https://www.cblingua.com",a:"Seville",la:37.387,lo:-5.991},
+{n:4,name:"Between Traducciones",c:"Translation",p:"684069214",w:"https://www.betweentraducciones.es",a:"Seville",la:37.386,lo:-5.993},
+{n:5,name:"Traduspanish",c:"Translation",p:"699860794",w:"https://www.traduspanish.com",a:"Seville",la:37.385,lo:-5.990},
+{n:6,name:"Laffitte Language Consulting",c:"Translation",p:"954959871",w:"https://www.laffitte.es",a:"Seville",la:37.390,lo:-5.996},
+{n:7,name:"NDT Traductores",c:"Translation",p:"658927928",w:"https://www.ndt.es",a:"Seville",la:37.384,lo:-5.989},
+{n:8,name:"Trad&go",c:"Translation",p:"649390949",w:"https://www.tradandgo.com",a:"Seville",la:37.383,lo:-5.991},
+{n:9,name:"Tradophenia",c:"Translation",p:"954389656",w:"https://www.tradophenia.com",a:"Seville",la:37.382,lo:-5.994},
+{n:10,name:"Essenzia Traducciones",c:"Translation",p:"699665470",w:"https://www.essenziatraducciones.com",a:"Seville",la:37.381,lo:-5.993},
+{n:11,name:"ARROYO TRADUCCIONES",c:"Translation",p:"954577385",w:"https://www.arroyotraducciones.com",a:"Seville",la:37.380,lo:-5.992},
+{n:12,name:"Tradesende",c:"Translation",p:"955326417",w:"https://www.tradesende.com",a:"Seville",la:37.379,lo:-5.991},
+{n:13,name:"TrustedSeville",c:"Expat",p:"675987075",a:"C/ Pastor y Landero 7, 41001",la:37.388,lo:-5.999},
+{n:14,name:"Wolffinance",c:"Expat",p:"633722901",a:"Paseo Delicias, 41001",la:37.379,lo:-5.996},
+{n:15,name:"IN Consultoría",c:"Expat",p:"671541335",a:"C/ Astronomía 1",la:37.378,lo:-5.995},
+{n:16,name:"White Umbrella Tours",c:"Tour",p:"692356398",w:"https://whiteumbrellatours.com",a:"Puerta Jerez — GuruWalk 4.96/5",la:37.382,lo:-5.993},
+{n:17,name:"Best Of Sevilla Tours",c:"Tour",a:"GuruWalk 4.95/5 from 4,831",la:37.388,lo:-5.995},
+{n:18,name:"Free Tours Sevilla",c:"Tour",a:"GuruWalk 4.85/5 from 4,900",la:37.387,lo:-5.994},
+{n:19,name:"Free Group Guides",c:"Tour",a:"GuruWalk Premium 4.94/5",la:37.386,lo:-5.993},
+{n:20,name:"Sevilla Free Tours",c:"Tour",a:"English walking tour",la:37.385,lo:-5.992},
+{n:21,name:"Hello Sevilla Tours",c:"Tour",a:"Monumental free tour",la:37.384,lo:-5.991},
+{n:22,name:"Fite Tours",c:"Tour",p:"661051371",w:"https://www.fitetours.com",a:"Seville city centre",la:37.388,lo:-5.996},
+{n:23,name:"Consulta Médica Nervión",c:"Medical",p:"954923008",a:"C/ Campo de Los Martires 9, 41005",la:37.375,lo:-5.965},
+{n:24,name:"Centro Médico Arenal",c:"Medical",p:"954293338",a:"C/ Pastor y Landero 13, 41001",la:37.383,lo:-5.997},
+{n:25,name:"Medicur",c:"Medical",p:"954535000",a:"C/ José de la Cámara 3, 41018",la:37.378,lo:-5.954},
+{n:26,name:"Hospital Virgen del Rocío",c:"Medical",p:"955012000",a:"Av. Manuel Siurot",la:37.360,lo:-5.985},
+{n:27,name:"Clínica Dermatológica Triana",c:"Medical",p:"954334483",a:"C/ Espartinas 3, 41010",la:37.384,lo:-6.010},
+{n:28,name:"Taste of America",c:"Food",w:"https://tasteofamerica.es",a:"American food store",la:37.389,lo:-5.992},
+{n:29,name:"The Merchant Pub",c:"Pub",a:"C/ Rafael González Abreu, 41001",la:37.390,lo:-6.000},
+{n:30,name:"O'Neill's Irish Pub",c:"Pub",a:"C/ Adriano, 41001",la:37.386,lo:-6.000},
+{n:31,name:"The Clan Scottish Pub",c:"Pub",a:"C/ Adriano 3, 41001",la:37.386,lo:-5.997},
+{n:32,name:"Arcadia Coworking",c:"Cowork",p:"654865194",w:"https://arcadiacoworking.com",a:"C/ Cuna 16, 41004",la:37.391,lo:-5.993},
+{n:33,name:"Gallo Rojo Coworking",c:"Cowork",w:"https://gallorojo.es",a:"C/ Madre María 9, 41003",la:37.395,lo:-5.991},
+];
+// Stats
+const counts={};D.forEach(d=>{counts[d.c]=(counts[d.c]||0)+1});const st=document.getElementById("stats");Object.entries(counts).forEach(([k,v])=>{const e=document.createElement("div");e.className="stat";e.innerHTML=`${k} <span>${v}</span>`;st.appendChild(e)});
+// Legend
+const lg=document.getElementById("legend");Object.entries(C).forEach(([k,v])=>{const e=document.createElement("div");e.className="legend-item";e.innerHTML=`<span class="legend-dot" style="background:${v}"></span>${k}`;lg.appendChild(e)});
+// Cards
+const g=document.getElementById("cards");const t=document.getElementById("toast");let tid;
+function sn(m,type="ok"){t.textContent=m;t.className=`toast show ${type}`;clearTimeout(tid);tid=setTimeout(()=>t.className="toast",2000)}
+D.forEach(d=>{
+const bg=C[d.c]||"#256e9e";const cr=document.createElement("div");cr.className="crd";
+cr.innerHTML=`<div class="bd"><div class="nn"><span class="num" style="background:${bg}">${d.n}</span> ${d.name} <span class="tag tg-${d.c}">${d.c}</span></div>${d.p?`<div class="ph"><strong>📞</strong> ${d.p}</div>`:""}<div class="ad">${d.a||""}</div><div class="lk">${d.w?`<a class="chp" href="${d.w}" target="_blank" rel="noopener">${d.w.replace(/https?:\/\//,'').replace(/\/.*/,'')}</a>`:'<span class="chp nd">no website</span>'}</div></div>`;
+g.appendChild(cr)});
+// Map
+const me=document.getElementById("map");if(me&&typeof L!=="undefined"){
+const m=L.map(me,{scrollWheelZoom:false}).setView([37.385,-5.987],13);
+L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>, CARTO',subdomains:"abc"}).addTo(m);
+let hf=false;function hl(){if(!hf){hf=true;const l=document.getElementById("loader");if(l)l.classList.add("hide")}}
+m.on("tileload",hl);m.on("tileerror",hl);setTimeout(hl,3000);
+const b=[];
+D.forEach(d=>{
+const bg=C[d.c]||"#256e9e";
+const ic=L.divIcon({className:"",html:`<span style="display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:999px;background:${bg};color:#fff;font-weight:700;font-size:.8rem;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.3)">${d.n}</span>`,iconSize:[30,30],iconAnchor:[15,15]});
+L.marker([d.la,d.lo],{icon:ic}).addTo(m).bindPopup(`<strong>${d.n}. ${d.name}</strong><br>${d.c}${d.p?"<br>📞 "+d.p:""}`);
+b.push([d.la,d.lo])});
+m.fitBounds(b,{padding:[32,32]})}
+</script>
 </body>
 </html>
