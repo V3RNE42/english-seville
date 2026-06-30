@@ -127,10 +127,13 @@ categories:
 # ============================================================================
 
 methodology:
-  layer_0_reuse:
-    description: "Check existing repos for relevant entities"
-    repos_to_check:
-      - "V3RNE42/centros_compatibles (only non-school entities)"
+  layer_0_scraping_tools:
+    description: "Check user's GitHub repos for existing scraping utilities"
+    notes: >
+      User mentioned GitHub repos containing scraping scripts and approaches
+      that could accelerate data collection — not pre-existing data repos.
+      Review repos for: headless browser scripts, phone extraction patterns,
+      Overpass query builders, directory scraper templates, OSINT utilities.
   layer_1_open_data:
     description: "No open data CSV for these categories — skip"
     status: "not applicable"
@@ -211,11 +214,10 @@ blockers:
   mcp_fetch: "HTTP 403/404 for many Spanish news/sites"
   cloudflare: "Blocks ProZ.com, Lucas Fox, Idealista, TopDoctors, Savills, ATA, Sanitas, Adeslas"
   doctoralia: "SPA routing — all direct URLs return 404"
-  workaround: "Reuse from related projects + TranslatorsCafe.com + Yelp.es + Expat.com + Overpass + direct website verification"
+  workaround: "TranslatorsCafe.com + Yelp.es + Expat.com + Overpass + direct website verification"
   new_tools_unblocked:
     translatorscafe: "✅ Worked. 162 EN>ES translators in Seville."
     yelp_es: "✅ Worked for medical/dental keyword search. Weak signal (no explicit EN confirmation)."
     overpass_medical: "✅ Worked. 30+ clinics/dentists with verified GPS+phones."
     expat_directory: "✅ Worked. 6 expat service providers with phone numbers."
-    wayback_machine: "⚠️ Available but not tested for these sites."
   remaining: "Manual interactive browser session still needed for Cloudflare sites (ProZ.com, Lucas Fox, TopDoctors) and to verify individual websites of medical/dental providers."
