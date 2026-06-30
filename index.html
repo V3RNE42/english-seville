@@ -3,19 +3,16 @@
 <html lang="en">
 <head>
 <!--
-    Responsive HTML directory for English-first businesses in Seville city.
-    Language academies, international schools, British/Irish pubs, expat services,
-    international food stores, coworking spaces, and professional services
-    that operate primarily in English or cater to English speakers.
-    Leaflet map + numbered cards. pattern from centros_compatibles.
+    English-First Businesses in Seville (non-school).
+    Schools & academies: see V3RNE42/centros_compatibles.
+    This repo: pubs, hotels, tours, coworking, food stores, expat services, etc.
   -->
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>English-First Businesses in Seville</title>
+<title>English-First Businesses in Seville — Non-School Directory</title>
 <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
 <link href="favicon.ico" rel="icon" sizes="16x16"/>
 <link href="favicon-32.png" rel="icon" sizes="32x32" type="image/png"/>
-<!-- Preconnect tile server for faster map rendering -->
 <link href="https://a.basemaps.cartocdn.com" rel="preconnect"/>
 <link href="https://b.basemaps.cartocdn.com" rel="preconnect"/>
 <link href="https://c.basemaps.cartocdn.com" rel="preconnect"/>
@@ -64,6 +61,7 @@
         color: #1a3a4f;
         border-radius: 0 10px 10px 0;
       }
+      .profile strong { display: block; margin-bottom: 6px; }
       .section-tag {
         display: inline-block;
         padding: 3px 10px;
@@ -76,6 +74,10 @@
         text-transform: uppercase;
         letter-spacing: 0.03em;
       }
+      .pending-tag {
+        background: #fef0e6;
+        color: #b4550e;
+      }
       .map-section {
         margin-top: 30px;
         padding-top: 24px;
@@ -87,7 +89,6 @@
         font-size: clamp(1.25rem, 2.4vw, 1.65rem);
         line-height: 1.25;
       }
-      .map-section p { margin-bottom: 16px; }
       #seville-map {
         min-height: 520px;
         width: 100%;
@@ -111,37 +112,10 @@
         transition: opacity 0.5s ease;
       }
       .map-loader.is-hidden { opacity: 0; pointer-events: none; }
-      .map-loader-track {
-        width: 200px; height: 6px;
-        background: #d0d7e2; border-radius: 3px;
-        overflow: hidden; position: relative;
-      }
-      .map-loader-bar {
-        height: 100%; width: 100%;
-        background: linear-gradient(90deg, var(--accent), #5bb4ff);
-        border-radius: 3px;
-        transform: translateX(-100%);
-        animation: loader-fill 2s ease-in-out infinite;
-      }
-      .map-loader-thrower {
-        position: absolute; top: 50%;
-        width: 14px; height: 14px;
-        background: var(--accent-dark);
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-        animation: loader-throw 2s ease-in-out infinite;
-        box-shadow: 0 0 8px rgba(37, 110, 158, 0.5);
-      }
-      .map-loader-text {
-        margin-top: 18px;
-        font-size: 0.9rem;
-        color: var(--muted);
-        letter-spacing: 0.02em;
-      }
-      .map-loader-text::after {
-        content: '';
-        animation: loader-dots 1.5s steps(4, end) infinite;
-      }
+      .map-loader-track { width: 200px; height: 6px; background: #d0d7e2; border-radius: 3px; overflow: hidden; position: relative; }
+      .map-loader-bar { height: 100%; width: 100%; background: linear-gradient(90deg, var(--accent), #5bb4ff); border-radius: 3px; transform: translateX(-100%); animation: loader-fill 2s ease-in-out infinite; }
+      .map-loader-thrower { position: absolute; top: 50%; width: 14px; height: 14px; background: var(--accent-dark); border-radius: 50%; transform: translate(-50%, -50%); animation: loader-throw 2s ease-in-out infinite; box-shadow: 0 0 8px rgba(37, 110, 158, 0.5); }
+      .map-loader-text { margin-top: 18px; font-size: 0.9rem; color: var(--muted); letter-spacing: 0.02em; }
       @keyframes loader-fill {
         0%   { transform: translateX(-100%); }
         50%  { transform: translateX(-40%); }
@@ -152,142 +126,70 @@
         50%  { left: 60%; }
         100% { left: 100%; }
       }
-      @keyframes loader-dots {
-        0%   { content: ''; }
-        25%  { content: '.'; }
-        50%  { content: '..'; }
-        75%  { content: '...'; }
-        100% { content: ''; }
-      }
-      .map-fallback {
-        margin-top: 10px;
-        font-size: 0.86rem;
-        color: var(--muted);
-      }
-      .cards-section {
-        margin-top: 0;
-        padding-top: 16px;
-      }
-      .cards-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 12px;
-      }
-      .school-card {
-        display: flex;
-        gap: 12px;
-        padding: 14px;
-        border: 1px solid var(--line);
-        border-radius: 12px;
+      .map-fallback { margin-top: 10px; font-size: 0.86rem; color: var(--muted); }
+      .cards-section { margin-top: 0; padding-top: 16px; }
+      .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+      .business-card {
+        display: flex; gap: 12px; padding: 14px;
+        border: 1px solid var(--line); border-radius: 12px;
         background: #ffffff;
         box-shadow: 0 2px 8px rgba(16, 24, 40, 0.04);
         transition: box-shadow 0.15s ease;
       }
-      .school-card:hover { box-shadow: 0 4px 16px rgba(16, 24, 40, 0.08); }
+      .business-card:hover { box-shadow: 0 4px 16px rgba(16, 24, 40, 0.08); }
       .card-number {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 22px; height: 22px;
-        border-radius: 999px;
-        background: var(--accent);
-        color: #ffffff;
-        font-weight: 700;
-        font-size: 0.75rem;
-        line-height: 1;
-        margin-right: 5px;
-        vertical-align: middle;
-        flex-shrink: 0;
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 22px; height: 22px; border-radius: 999px;
+        background: var(--accent); color: #ffffff;
+        font-weight: 700; font-size: 0.75rem; line-height: 1;
+        margin-right: 5px; vertical-align: middle; flex-shrink: 0;
       }
       .card-body { flex: 1; min-width: 0; }
-      .card-name {
-        font-weight: 700;
-        color: var(--head);
-        font-size: 0.95rem;
-        line-height: 1.3;
-        margin-bottom: 4px;
-      }
-      .card-name .section-tag { vertical-align: middle; }
-      .card-addr {
-        font-size: 0.85rem;
-        color: var(--muted);
-        line-height: 1.35;
-        margin-bottom: 8px;
-      }
-      .card-phone {
-        font-size: 0.85rem;
-        color: var(--muted);
-        line-height: 1.35;
-        margin-bottom: 6px;
-      }
+      .card-name { font-weight: 700; color: var(--head); font-size: 0.95rem; line-height: 1.3; margin-bottom: 4px; }
+      .card-addr { font-size: 0.85rem; color: var(--muted); line-height: 1.35; margin-bottom: 8px; }
+      .card-phone { font-size: 0.85rem; color: var(--muted); line-height: 1.35; margin-bottom: 6px; }
       .card-phone strong { color: var(--head); }
-      .card-links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        align-items: center;
-      }
+      .card-links { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
       .link-chip, .email-chip {
-        display: inline-flex;
-        align-items: center;
-        max-width: 100%;
-        padding: 5px 10px;
-        border: 1px solid #c9ddff;
-        border-radius: 999px;
-        background: #f8fbff;
-        font-size: 0.82rem;
-        line-height: 1.2;
-        white-space: nowrap;
+        display: inline-flex; align-items: center; max-width: 100%;
+        padding: 5px 10px; border: 1px solid #c9ddff;
+        border-radius: 999px; background: #f8fbff;
+        font-size: 0.82rem; line-height: 1.2; white-space: nowrap;
       }
       .link-chip { color: var(--accent); text-decoration: none; }
       .link-chip:hover { background: #eaf2ff; }
       .email-chip {
-        cursor: pointer;
-        color: var(--accent-dark);
-        user-select: none;
+        cursor: pointer; color: var(--accent-dark); user-select: none;
         transition: background 140ms ease, border-color 140ms ease;
       }
-      .email-chip:hover {
-        background: #eaf2ff;
-        border-color: var(--accent);
-      }
-      .no-data-chip {
-        background: #f7f8fb;
-        color: #999;
-        border-color: #ddd;
-        cursor: default;
-      }
-      .toast {
-        position: fixed;
-        right: clamp(14px, 3vw, 28px);
-        bottom: clamp(14px, 3vw, 28px);
-        z-index: 9999;
-        max-width: min(420px, calc(100vw - 28px));
-        padding: 13px 16px;
+      .email-chip:hover { background: #eaf2ff; border-color: var(--accent); }
+      .no-data-chip { background: #f7f8fb; color: #999; border-color: #ddd; cursor: default; }
+      .pending-banner {
+        background: #fef8e6;
+        border: 1px dashed #d4a843;
         border-radius: 12px;
-        background: #102a43;
-        color: #ffffff;
-        box-shadow: 0 12px 34px rgba(16, 42, 67, 0.28);
-        font-size: 0.95rem;
-        opacity: 0;
-        transform: translateY(16px);
-        pointer-events: none;
-        transition: opacity 180ms ease, transform 180ms ease;
+        padding: 16px 18px;
+        margin: 20px 0;
+      }
+      .pending-banner h3 { margin: 0 0 8px; color: #8a5f0e; font-size: 1rem; }
+      .pending-banner ul { margin: 0; padding-left: 20px; color: var(--muted); font-size: 0.9rem; }
+      .pending-banner ul li { margin-bottom: 4px; }
+      .toast {
+        position: fixed; right: clamp(14px, 3vw, 28px); bottom: clamp(14px, 3vw, 28px);
+        z-index: 9999; max-width: min(420px, calc(100vw - 28px));
+        padding: 13px 16px; border-radius: 12px; background: #102a43;
+        color: #ffffff; box-shadow: 0 12px 34px rgba(16, 42, 67, 0.28);
+        font-size: 0.95rem; opacity: 0; transform: translateY(16px);
+        pointer-events: none; transition: opacity 180ms ease, transform 180ms ease;
       }
       .toast.is-visible { opacity: 1; transform: translateY(0); }
       .toast.is-success { background: var(--success); }
       .toast.is-error { background: #a61b1b; }
       .map-marker-number {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 32px; height: 32px;
-        border-radius: 999px;
-        background: var(--accent);
-        color: #ffffff;
-        font-weight: 700;
-        font-size: 0.86rem;
-        line-height: 1;
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 32px; height: 32px; border-radius: 999px;
+        background: var(--accent); color: #ffffff;
+        font-weight: 700; font-size: 0.86rem; line-height: 1;
         border: 2px solid #ffffff;
         box-shadow: 0 2px 10px rgba(15, 55, 99, 0.35);
       }
@@ -295,11 +197,6 @@
         main { padding: 16px; }
         .cards-grid { grid-template-columns: 1fr; gap: 10px; }
         #seville-map { min-height: 420px; }
-        .card-links .link-chip, .card-links .email-chip {
-          white-space: normal;
-          overflow-wrap: anywhere;
-          word-break: break-word;
-        }
       }
     </style>
 </head>
@@ -307,25 +204,38 @@
 <main>
 <h1>English-First Businesses in Seville</h1>
 <p>
-        A directory of businesses and services in Seville city that operate primarily
-        in English or cater to English speakers — language academies, international
-        schools, British and Irish pubs, expat-oriented services, international food
-        stores, coworking spaces, and professional services. Data verified through
-        independent research. Last updated June 2026.
+        A directory of non-school businesses in Seville city (41001–41020)
+        that operate primarily in English or cater to English speakers.
       </p>
 <div class="profile">
-<strong>What's included:</strong> Seville city only (postcode areas 41001–41020).
-        Categories: language academies, international/bilingual schools, British/Irish
-        pubs, international food stores, coworking spaces, translation services,
-        expat community resources. Priority given to businesses that use English
-        as their primary working language.
+<strong>⚠️ Schools and language academies are NOT included here.</strong>
+        They are covered in <a href="https://github.com/V3RNE42/centros_compatibles" target="_blank" rel="noopener">centros_compatibles</a>
+        (68 education centres with 41 verified phones).
+        <br><br>
+        <strong>Scope of this directory:</strong> British/Irish pubs, hotels,
+        tourist guides, coworking studios, international food stores,
+        expat services, translation, English-speaking medical/dental,
+        and real estate agencies.
       </div>
 
+<div class="pending-banner">
+<h3>🔄 Research in progress — see PLAN.yaml</h3>
+<ul>
+<li>🍺 British/Irish pubs — 1 verified (The Merchant Pub). More pending.</li>
+<li>🍔 International food stores — 1 verified (Taste of America).</li>
+<li>🏨 Hotels &amp; accommodation — not yet researched.</li>
+<li>🗺️ Tourist guides &amp; tours — not yet researched.</li>
+<li>💻 Coworking studios — not yet researched.</li>
+<li>📋 Expat services (legal, tax, relocation) — not yet researched.</li>
+<li>🌐 Translation &amp; interpretation — not yet researched.</li>
+<li>🏥 English-speaking medical/dental — not yet researched.</li>
+<li>🏠 Real estate (English-speaking) — not yet researched.</li>
+</ul>
+</div>
+
 <section aria-labelledby="map-title" class="map-section">
-<h2 id="map-title">Map of English-First Businesses in Seville</h2>
-<p>
-          Numbered locations of English-first businesses across Seville city.
-        </p>
+<h2 id="map-title">Map</h2>
+<p>Verified locations so far. More markers will appear as categories are researched.</p>
 <div class="map-layout-full">
 <div id="seville-map">
   <div class="map-loader" id="map-loader">
@@ -336,397 +246,18 @@
     <span class="map-loader-text">Loading map</span>
   </div>
 </div>
-<p class="map-fallback">
-  If the map tiles do not load, please check your internet connection; the numbered list remains available below.
-</p>
+<p class="map-fallback">If the map tiles do not load, check your connection; the numbered list is below.</p>
 </div>
 </section>
 
 <section aria-labelledby="cards-title" class="cards-section">
-<h2 id="cards-title">All Businesses — Numbered List</h2>
+<h2 id="cards-title">Verified Businesses</h2>
 <div class="cards-grid">
 
-<!-- ===== LANGUAGE ACADEMIES ===== -->
-
-<div class="school-card">
+<div class="business-card">
   <div class="card-body">
-    <div class="card-name"><span class="card-number">1</span> AMT Spain / AM Transnational <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 954232203</div>
-    <div class="card-addr">Nuestra Señora de las Mercedes, 4, 41013 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://www.amt-spain.com/en/english-academy/" rel="noopener" target="_blank">amt-spain.com</a>
-      <span class="email-chip" data-email="hola@amt-spain.com" role="button" tabindex="0">hola@amt-spain.com</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">2</span> Centro Norteamericano <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 954224107</div>
-    <div class="card-addr">Calle Harinas, 18, 41001 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://centronorteamericano.com/" rel="noopener" target="_blank">centronorteamericano.com</a>
-      <span class="email-chip" data-email="hi@centronorteamericano.com" role="button" tabindex="0">hi@centronorteamericano.com</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">3</span> CLIC International House Sevilla <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 954502131</div>
-    <div class="card-addr">C/ Albareda, 19, 41001 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://clic.es/seville/" rel="noopener" target="_blank">clic.es/seville/</a>
-      <span class="email-chip" data-email="booking@clic.es" role="button" tabindex="0">booking@clic.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">4</span> ELI — English Language Institute <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 954675667</div>
-    <div class="card-addr">C/ Larra, 1, 41005 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://www.eli.es/" rel="noopener" target="_blank">eli.es</a>
-      <span class="email-chip" data-email="recruitment@eli.es" role="button" tabindex="0">recruitment@eli.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">5</span> English Connection — Bermejales <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 638273132</div>
-    <div class="card-addr">Paseo de Europa, 14b, 41012 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://englishconnection.es/academia-ingles/sevilla/" target="_blank" rel="noopener">englishconnection.es</a>
-      <span class="email-chip" tabindex="0" role="button" data-email="sevilla.losremedios@englishconnection.es">sevilla.losremedios@englishconnection.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">6</span> English Connection — Centro <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 602249885</div>
-    <div class="card-addr">Calle O'Donnell 3, 41001 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://englishconnection.es/academia-ingles/sevilla/" target="_blank" rel="noopener">englishconnection.es</a>
-      <span class="email-chip" tabindex="0" role="button" data-email="sevilla.losremedios@englishconnection.es">sevilla.losremedios@englishconnection.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">7</span> English Connection — Cerro del Águila <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 607065030</div>
-    <div class="card-addr">Calle Galicia 19, 41006 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://englishconnection.es/academia-ingles/sevilla/" target="_blank" rel="noopener">englishconnection.es</a>
-      <span class="email-chip" tabindex="0" role="button" data-email="sevilla.losremedios@englishconnection.es">sevilla.losremedios@englishconnection.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">8</span> English Connection — Este Ciencias <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 619016169</div>
-    <div class="card-addr">Avda. de las Ciencias 16, 41020 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://englishconnection.es/academia-ingles/sevilla/" target="_blank" rel="noopener">englishconnection.es</a>
-      <span class="email-chip" tabindex="0" role="button" data-email="sevilla.losremedios@englishconnection.es">sevilla.losremedios@englishconnection.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">9</span> English Connection — Este Góndolas <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 669917092</div>
-    <div class="card-addr">C. Cueva de Menga 3, 41020 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://englishconnection.es/academia-ingles/sevilla/" target="_blank" rel="noopener">englishconnection.es</a>
-      <span class="email-chip" tabindex="0" role="button" data-email="sevilla.losremedios@englishconnection.es">sevilla.losremedios@englishconnection.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">10</span> English Connection — Gran Plaza <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 613278001</div>
-    <div class="card-addr">Avda. de la Ciudad Jardín 8, 41005 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://englishconnection.es/academia-ingles/sevilla/" target="_blank" rel="noopener">englishconnection.es</a>
-      <span class="email-chip" tabindex="0" role="button" data-email="sevilla.losremedios@englishconnection.es">sevilla.losremedios@englishconnection.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">11</span> English Connection — La Salle <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 621007712</div>
-    <div class="card-addr">Avda. de la Salle 26, 41008 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://englishconnection.es/academia-ingles/sevilla/" target="_blank" rel="noopener">englishconnection.es</a>
-      <span class="email-chip" tabindex="0" role="button" data-email="sevilla.losremedios@englishconnection.es">sevilla.losremedios@englishconnection.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">12</span> English Connection — Los Remedios <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 640178897</div>
-    <div class="card-addr">Calle Asunción, 59, 41011 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://englishconnection.es/academia-ingles/sevilla/" target="_blank" rel="noopener">englishconnection.es</a>
-      <span class="email-chip" tabindex="0" role="button" data-email="sevilla.losremedios@englishconnection.es">sevilla.losremedios@englishconnection.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">13</span> English Connection — Macarena <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 954900810</div>
-    <div class="card-addr">C. Resolana 37, 41002 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://englishconnection.es/academia-ingles/sevilla/" target="_blank" rel="noopener">englishconnection.es</a>
-      <span class="email-chip" tabindex="0" role="button" data-email="sevilla.losremedios@englishconnection.es">sevilla.losremedios@englishconnection.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">14</span> English Connection — Parque Alcosa <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 641137822</div>
-    <div class="card-addr">Av. Turia 3, Puerta C2, 41019 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://englishconnection.es/academia-ingles/sevilla/" target="_blank" rel="noopener">englishconnection.es</a>
-      <span class="email-chip" tabindex="0" role="button" data-email="sevilla.losremedios@englishconnection.es">sevilla.losremedios@englishconnection.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">15</span> English Connection — Parsi <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 633935243</div>
-    <div class="card-addr">Calle Parsi 6, 41, 41016 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://englishconnection.es/academia-ingles/sevilla/" target="_blank" rel="noopener">englishconnection.es</a>
-      <span class="email-chip" tabindex="0" role="button" data-email="sevilla.losremedios@englishconnection.es">sevilla.losremedios@englishconnection.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">16</span> English Connection — Pinomontano <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 955381613</div>
-    <div class="card-addr">C. Corral de los Olmos 2, Bajo, 41015 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://englishconnection.es/academia-ingles/sevilla/" target="_blank" rel="noopener">englishconnection.es</a>
-      <span class="email-chip" tabindex="0" role="button" data-email="sevilla.losremedios@englishconnection.es">sevilla.losremedios@englishconnection.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">17</span> English Connection — Reina Mercedes <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 665949429</div>
-    <div class="card-addr">Avda. Reina Mercedes, 49, 41012 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://englishconnection.es/academia-ingles/sevilla/" target="_blank" rel="noopener">englishconnection.es</a>
-      <span class="email-chip" tabindex="0" role="button" data-email="sevilla.losremedios@englishconnection.es">sevilla.losremedios@englishconnection.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">18</span> English Connection — San Jerónimo <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 604965342</div>
-    <div class="card-addr">Calle Burgos 22, 41015 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://englishconnection.es/academia-ingles/sevilla/" target="_blank" rel="noopener">englishconnection.es</a>
-      <span class="email-chip" tabindex="0" role="button" data-email="sevilla.losremedios@englishconnection.es">sevilla.losremedios@englishconnection.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">19</span> English Connection — Santa Justa <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 854557184</div>
-    <div class="card-addr">C/ Sinaí, 30, 41007 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://englishconnection.es/academia-ingles/sevilla/" target="_blank" rel="noopener">englishconnection.es</a>
-      <span class="email-chip" tabindex="0" role="button" data-email="sevilla.losremedios@englishconnection.es">sevilla.losremedios@englishconnection.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">20</span> English Connection — Tharsis <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 636307288</div>
-    <div class="card-addr">Calle Carme Martínez Sancho 10, 41008 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://englishconnection.es/academia-ingles/sevilla/" target="_blank" rel="noopener">englishconnection.es</a>
-      <span class="email-chip" tabindex="0" role="button" data-email="sevilla.losremedios@englishconnection.es">sevilla.losremedios@englishconnection.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">21</span> English Connection — Triana <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 681676526</div>
-    <div class="card-addr">C/ José María del Campo, Local 1, 41010 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://englishconnection.es/academia-ingles/sevilla/" target="_blank" rel="noopener">englishconnection.es</a>
-      <span class="email-chip" tabindex="0" role="button" data-email="sevilla.losremedios@englishconnection.es">sevilla.losremedios@englishconnection.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">22</span> English Connection — Viapol <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 619088550</div>
-    <div class="card-addr">C. Presidente Cárdenas 6, 41013 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://englishconnection.es/academia-ingles/sevilla/" target="_blank" rel="noopener">englishconnection.es</a>
-      <span class="email-chip" tabindex="0" role="button" data-email="sevilla.losremedios@englishconnection.es">sevilla.losremedios@englishconnection.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">23</span> My English School Sevilla <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 955944688</div>
-    <div class="card-addr">Avda. de la República Argentina, 16, 41010 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://www.myes.school/es/cursos-de-ingles-sevilla/" rel="noopener" target="_blank">myes.school</a>
-      <span class="email-chip" data-email="info@myes.es" role="button" tabindex="0">info@myes.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">24</span> Notting Hill Academia de Idiomas <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 954002289</div>
-    <div class="card-addr">C/ Virgen de la Estrella, 10, 41011 Seville (Los Remedios)</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://www.nottinghillacademia.com/" target="_blank" rel="noopener">nottinghillacademia.com</a>
-      <span class="email-chip" tabindex="0" role="button" data-email="nottingsevillahill@gmail.com">nottingsevillahill@gmail.com</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">25</span> Sevilla Language Center <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 954214893</div>
-    <div class="card-addr">Paseo de Cristina, 3, mezzanine floor, 41001 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://www.sevillalanguagecenter.com/" rel="noopener" target="_blank">sevillalanguagecenter.com</a>
-      <span class="email-chip" data-email="info@sevillalanguagecenter.com" role="button" tabindex="0">info@sevillalanguagecenter.com</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">26</span> Giralda Center / Spanish House Idiomas <span class="section-tag">Academy</span></div>
-    <div class="card-phone"><strong>📞</strong> 954221346</div>
-    <div class="card-addr">C/ Gonzalo Bilbao, 29, Local 3, 41003 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://www.giraldacenter.com" rel="noopener" target="_blank">giraldacenter.com</a>
-      <span class="link-chip no-data-chip">contact via website</span>
-    </div>
-  </div>
-</div>
-
-<!-- ===== INTERNATIONAL / BILINGUAL SCHOOLS ===== -->
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">27</span> Col. Alemán de Sevilla Alberto Durero <span class="section-tag">School</span></div>
-    <div class="card-phone"><strong>📞</strong> 954999509</div>
-    <div class="card-addr">Av. de Altamira s/n, 41020 Seville (Sevilla Este)</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://www.colegioalemansevilla.com/" rel="noopener" target="_blank">colegioalemansevilla.com</a>
-      <span class="email-chip" data-email="secretaria@colegioalemansevilla.com" role="button" tabindex="0">secretaria@colegioalemansevilla.com</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">28</span> Col. de Fomento Entreolivos <span class="section-tag">School</span></div>
-    <div class="card-addr">C/ Párroco Don Eugenio, 18, 41015 Seville</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://www.entreolivos.com" rel="noopener" target="_blank">entreolivos.com</a>
-      <span class="email-chip" data-email="secretaria@entreolivos.com" role="button" tabindex="0">secretaria@entreolivos.com</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">29</span> St. Mary's School <span class="section-tag">School</span></div>
-    <div class="card-phone"><strong>📞</strong> 954690072</div>
-    <div class="card-addr">C/ Virgen de la Antigua, 35, 41011 Seville</div>
-    <div class="card-links">
-      <span class="link-chip no-data-chip">no website found</span>
-      <span class="email-chip" data-email="secretaria@stmaryssevilla.com" role="button" tabindex="0">secretaria@stmaryssevilla.com</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">30</span> Col. de Fomento Tabladilla <span class="section-tag">School</span></div>
-    <div class="card-phone"><strong>📞</strong> 954570511</div>
-    <div class="card-addr">Avda. de la Palmera, 58, 41012 Seville</div>
-    <div class="card-links">
-      <span class="link-chip no-data-chip">no website found</span>
-      <span class="email-chip" data-email="secretaria@tabladilla.com" role="button" tabindex="0">secretaria@tabladilla.com</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">31</span> Col. La Inmaculada (Jesuitinas) <span class="section-tag">School</span></div>
-    <div class="card-phone"><strong>📞</strong> 954270063</div>
-    <div class="card-addr">C/ Jesús del Gran Poder, 1, 41002 Seville</div>
-    <div class="card-links">
-      <span class="link-chip no-data-chip">no website found</span>
-      <span class="email-chip" data-email="secretaria@colegiolainmaculadasevilla.com" role="button" tabindex="0">secretaria@colegiolainmaculadasevilla.com</span>
-    </div>
-  </div>
-</div>
-
-<!-- ===== INTERNATIONAL FOOD STORES ===== -->
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">32</span> Taste of America <span class="section-tag">Food</span></div>
-    <div class="card-addr">Seville — verified online store with American food products</div>
+    <div class="card-name"><span class="card-number">1</span> Taste of America <span class="section-tag">Food</span></div>
+    <div class="card-addr">Seville — American food products (verified online store)</div>
     <div class="card-links">
       <a class="link-chip" href="https://tasteofamerica.es" rel="noopener" target="_blank">tasteofamerica.es</a>
       <span class="link-chip no-data-chip">contact via website</span>
@@ -734,77 +265,13 @@
   </div>
 </div>
 
-<!-- ===== BRITISH / IRISH PUBS ===== -->
-
-<div class="school-card">
+<div class="business-card">
   <div class="card-body">
-    <div class="card-name"><span class="card-number">33</span> The Merchant Pub <span class="section-tag">Pub</span></div>
+    <div class="card-name"><span class="card-number">2</span> The Merchant Pub <span class="section-tag">Pub</span></div>
     <div class="card-addr">Seville — British pub (verified on social media)</div>
     <div class="card-links">
       <a class="link-chip" href="https://facebook.com/p/The-Merchant-Pub-Sevilla" rel="noopener" target="_blank">Facebook page</a>
-      <span class="link-chip no-data-chip">phone TBC</span>
-    </div>
-  </div>
-</div>
-
-<!-- ===== ADDITIONAL SCHOOLS (metropolitan area) ===== -->
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">34</span> CBS — The British School of Seville <span class="section-tag">School</span></div>
-    <div class="card-phone"><strong>📞</strong> 693601083</div>
-    <div class="card-addr">Urb. Pinar de la Juliana, Bollullos de la Mitación, 41110</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://colegiobs.eu/" rel="noopener" target="_blank">colegiobs.eu</a>
-      <span class="email-chip" data-email="secretaria@colegiobs.eu" role="button" tabindex="0">secretaria@colegiobs.eu</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">35</span> Highlands School Sevilla <span class="section-tag">School</span></div>
-    <div class="card-phone"><strong>📞</strong> 955990150</div>
-    <div class="card-addr">Carretera de Utrera, km 4.5, 41089 Montequinto</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://www.highlandssevilla.es/" rel="noopener" target="_blank">highlandssevilla.es</a>
-      <span class="email-chip" data-email="atencionfamilias@highlandssevilla.es" role="button" tabindex="0">atencionfamilias@highlandssevilla.es</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">36</span> St. Angela International School <span class="section-tag">School</span></div>
-    <div class="card-phone"><strong>📞</strong> 639227458</div>
-    <div class="card-addr">Calle Canarias, 269, Salteras</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://saintangelainternationalschoolsevilla.com/" rel="noopener" target="_blank">stangelainternational.com</a>
-      <span class="email-chip" data-email="workwithus@stangelainternationalschoolsevilla.com" role="button" tabindex="0">workwithus@stangelainternationalschoolsevilla.com</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">37</span> Yago School Sevilla <span class="section-tag">School</span></div>
-    <div class="card-phone"><strong>📞</strong> 955511234</div>
-    <div class="card-addr">Av. Antonio Mairena, 54, Castilleja de la Cuesta, 41950</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://yagoschoolsevilla.com/" rel="noopener" target="_blank">yagoschoolsevilla.com</a>
-      <span class="email-chip" data-email="secretary@yagoschool.com" role="button" tabindex="0">secretary@yagoschool.com</span>
-    </div>
-  </div>
-</div>
-
-<div class="school-card">
-  <div class="card-body">
-    <div class="card-name"><span class="card-number">38</span> Europa International School <span class="section-tag">School</span></div>
-    <div class="card-phone"><strong>📞</strong> 954717069</div>
-    <div class="card-addr">Carretera A-8076, km 6, 41807 Espartinas</div>
-    <div class="card-links">
-      <a class="link-chip" href="https://www.europaschool.org/" rel="noopener" target="_blank">europaschool.org</a>
-      <span class="email-chip" data-email="rph@europaschool.org" role="button" tabindex="0">rph@europaschool.org</span>
+      <span class="link-chip no-data-chip">phone &amp; address TBC</span>
     </div>
   </div>
 </div>
@@ -816,126 +283,34 @@
 <div aria-live="polite" class="toast" id="toast" role="status"></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-      const toastElement = document.getElementById("toast");
-      let toastTimeoutId = null;
-
-      function showToast(message, type) {
-        toastElement.textContent = message;
-        toastElement.className = `toast is-visible is-${type}`;
-        window.clearTimeout(toastTimeoutId);
-        toastTimeoutId = window.setTimeout(() => {
-          toastElement.classList.remove("is-visible");
-        }, 2200);
-      }
-
-      async function copyEmailToClipboard(emailAddress) {
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(emailAddress);
-          } else {
-            const temporaryInput = document.createElement("textarea");
-            temporaryInput.value = emailAddress;
-            temporaryInput.setAttribute("readonly", "");
-            temporaryInput.style.position = "fixed";
-            temporaryInput.style.left = "-9999px";
-            document.body.appendChild(temporaryInput);
-            temporaryInput.select();
-            document.execCommand("copy");
-            document.body.removeChild(temporaryInput);
-          }
-          showToast(`Copied: ${emailAddress}`, "success");
-        } catch (error) {
-          showToast("Could not copy. Please copy manually.", "error");
-        }
-      }
-
       const mapLocations = [
-        { number: 1, name: "AMT Spain", area: "Bermejales", lat: 37.3465852, lng: -5.9796283 },
-        { number: 2, name: "Centro Norteamericano", area: "Centro", lat: 37.3867738, lng: -5.995963 },
-        { number: 3, name: "CLIC International House", area: "Centro", lat: 37.389367, lng: -5.996249 },
-        { number: 4, name: "ELI", area: "Nervión", lat: 37.3829853, lng: -5.9739859 },
-        { number: 5, name: "English Connection — Bermejales", area: "Bermejales", lat: 37.346484, lng: -5.980055 },
-        { number: 6, name: "English Connection — Centro", area: "Centro", lat: 37.392401, lng: -5.995273 },
-        { number: 7, name: "English Connection — Cerro Águila", area: "Cerro del Águila", lat: 37.370076, lng: -5.957103 },
-        { number: 8, name: "English Connection — Este Ciencias", area: "Sevilla Este", lat: 37.394843, lng: -5.921283 },
-        { number: 9, name: "English Connection — Este Góndolas", area: "Sevilla Este", lat: 37.399333, lng: -5.943663 },
-        { number: 10, name: "English Connection — Gran Plaza", area: "Gran Plaza", lat: 37.380482, lng: -5.96616 },
-        { number: 11, name: "English Connection — La Salle", area: "La Salle", lat: 37.407578, lng: -5.971489 },
-        { number: 12, name: "English Connection — Los Remedios", area: "Los Remedios", lat: 37.374014, lng: -5.999578 },
-        { number: 13, name: "English Connection — Macarena", area: "Macarena", lat: 37.40341, lng: -5.993279 },
-        { number: 14, name: "English Connection — Parque Alcosa", area: "Parque Alcosa", lat: 37.407069, lng: -5.928665 },
-        { number: 15, name: "English Connection — Parsi", area: "Parsi", lat: 37.376638, lng: -5.919062 },
-        { number: 16, name: "English Connection — Pinomontano", area: "Pinomontano", lat: 37.417942, lng: -5.969986 },
-        { number: 17, name: "English Connection — Reina Mercedes", area: "Reina Mercedes", lat: 37.358276, lng: -5.988318 },
-        { number: 18, name: "English Connection — San Jerónimo", area: "San Jerónimo", lat: 37.423979, lng: -5.985571 },
-        { number: 19, name: "English Connection — Santa Justa", area: "Santa Justa", lat: 37.390386, lng: -5.969926 },
-        { number: 20, name: "English Connection — Tharsis", area: "Tharsis", lat: 37.399142, lng: -5.969881 },
-        { number: 21, name: "English Connection — Triana", area: "Triana", lat: 37.383884, lng: -6.010804 },
-        { number: 22, name: "English Connection — Viapol", area: "Viapol", lat: 37.374939, lng: -5.977831 },
-        { number: 23, name: "My English School", area: "Los Remedios", lat: 37.3742211, lng: -6.0011416 },
-        { number: 24, name: "Notting Hill", area: "Los Remedios", lat: 37.3742203, lng: -6.0005538 },
-        { number: 25, name: "Sevilla Language Center", area: "Centro", lat: 37.399754, lng: -5.9931325 },
-        { number: 26, name: "Giralda Center", area: "Centro", lat: 37.392825, lng: -5.982674 },
-        { number: 27, name: "Col. Alemán", area: "Sevilla Este", lat: 37.4034, lng: -5.926 },
-        { number: 28, name: "Col. Entreolivos", area: "Los Remedios", lat: 37.3829774, lng: -6.0006165 },
-        { number: 29, name: "St. Mary's School", area: "Los Remedios", lat: 37.3729783, lng: -6.000471 },
-        { number: 30, name: "Col. Tabladilla", area: "El Porvenir", lat: 37.3608398, lng: -5.9827581 },
-        { number: 31, name: "Col. La Inmaculada", area: "Centro", lat: 37.3946834, lng: -5.9959183 },
-        { number: 32, name: "Taste of America", area: "Seville", lat: 37.389, lng: -5.992 },
-        { number: 33, name: "The Merchant Pub", area: "Centro", lat: 37.392, lng: -5.997 },
-        { number: 34, name: "CBS British School", area: "Bollullos", lat: 37.31564, lng: -6.16884 },
-        { number: 35, name: "Highlands School", area: "Montequinto", lat: 37.3431162, lng: -5.9069299 },
-        { number: 36, name: "St. Angela International", area: "Salteras", lat: 37.45912, lng: -6.05506 },
-        { number: 37, name: "Yago School", area: "Castilleja", lat: 37.39047, lng: -6.05591 },
-        { number: 38, name: "Europa International School", area: "Espartinas", lat: 37.3814997, lng: -6.125652 },
+        { number: 1, name: "Taste of America", area: "Seville", lat: 37.389, lng: -5.992 },
+        { number: 2, name: "The Merchant Pub", area: "Centro", lat: 37.392, lng: -5.997 },
       ];
 
-      function initializeSevilleMap() {
-        const mapContainer = document.getElementById("seville-map");
-        if (!mapContainer || typeof L === "undefined") return;
-        const map = L.map(mapContainer, { scrollWheelZoom: false }).setView([37.389, -5.985], 13);
-        const tileLayer = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+      function initMap() {
+        const c = document.getElementById("seville-map");
+        if (!c || typeof L === "undefined") return;
+        const m = L.map(c, { scrollWheelZoom: false }).setView([37.389, -5.995], 13);
+        const tl = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
           maxZoom: 19,
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/">CARTO</a>',
           subdomains: "abc",
         });
-        let loaderHidden = false;
-        function hideLoader() {
-          if (!loaderHidden) {
-            loaderHidden = true;
-            const loader = document.getElementById("map-loader");
-            if (loader) loader.classList.add("is-hidden");
-          }
-        }
-        map.on("tileload", hideLoader);
-        map.on("tileerror", hideLoader);
-        tileLayer.addTo(map);
-        setTimeout(hideLoader, 3000);
-        const markerBounds = [];
-        mapLocations.forEach((loc) => {
-          const icon = L.divIcon({
-            className: "",
-            html: `<span class="map-marker-number">${loc.number}</span>`,
-            iconSize: [32, 32],
-            iconAnchor: [16, 16],
-            popupAnchor: [0, -18],
-          });
-          L.marker([loc.lat, loc.lng], { icon })
-            .addTo(map)
-            .bindPopup(`<strong>${loc.number}. ${loc.name}</strong><br>${loc.area}`);
-          markerBounds.push([loc.lat, loc.lng]);
+        let h = false;
+        function hl() { if (!h) { h = true; const l = document.getElementById("map-loader"); if (l) l.classList.add("is-hidden"); } }
+        m.on("tileload", hl); m.on("tileerror", hl);
+        tl.addTo(m);
+        setTimeout(hl, 3000);
+        const b = [];
+        mapLocations.forEach((l) => {
+          const icon = L.divIcon({ className: "", html: `<span class="map-marker-number">${l.number}</span>`, iconSize: [32, 32], iconAnchor: [16, 16], popupAnchor: [0, -18] });
+          L.marker([l.lat, l.lng], { icon }).addTo(m).bindPopup(`<strong>${l.number}. ${l.name}</strong><br>${l.area}`);
+          b.push([l.lat, l.lng]);
         });
-        map.fitBounds(markerBounds, { padding: [32, 32] });
+        m.fitBounds(b, { padding: [32, 32] });
       }
-
-      initializeSevilleMap();
-
-      document.querySelectorAll(".email-chip").forEach((chip) => {
-        chip.addEventListener("click", () => copyEmailToClipboard(chip.dataset.email));
-        chip.addEventListener("keydown", (e) => {
-          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); copyEmailToClipboard(chip.dataset.email); }
-        });
-      });
+      initMap();
     </script>
 </body>
 </html>
