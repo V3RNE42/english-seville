@@ -90,10 +90,10 @@ categories:
 
   - id: "translation"
     name: "Translation & Interpretation Services"
-    status: "🔴"
-    entries: 0
-    notes: "No individual translators verified. ProZ.com blocked by Cloudflare. Spanish Translator Services portal reached but individual details not extractable. Manual browser needed."
-    data_needed: ["name", "phone", "web"]
+    status: "🟡"
+    entries: 1
+    notes: "TranslatorsCafe.com returned 162 EN>ES translators in Seville. Alfonso Amo verified with phone+address. 25+ individual names confirmed. ATA, ACT blocked. ProZ.com Cloudflare. Best source so far: TranslatorsCafe."
+    data_needed: ["phone", "web", "email"]
     search_terms:
       - "English translator Seville"
       - "translation services Seville"
@@ -101,9 +101,9 @@ categories:
 
   - id: "medical"
     name: "English-speaking Medical / Dental"
-    status: "🔴"
+    status: "🟡"
     entries: 0
-    notes: "Public hospitals confirmed (Virgen Macarena, Virgen del Rocío) but not English-specific. Quirónsalud group EN site exists but Seville page errored. Clínica Dental Sevilla confirmed Spanish-only. No English-speaking clinic verified."
+    notes: "Yelp 'english' keyword search returned 7 medical/dental leads (Consulta Médica Nervión, Centro Médico Cervantes Castilla, Clínica Dental Aníbal González, etc.). Overpass found 30+ clinics/dentists with verified phones. However, NONE explicitly confirm English-speaking staff. Need individual calls or website checks."
     data_needed: ["name", "address", "phone", "web", "gps"]
     search_terms:
       - "English-speaking doctor Seville"
@@ -191,13 +191,13 @@ research_order:
     reason: "1 entry. Need more international food stores."
   - priority: 7
     category: "real-estate"
-    reason: "1 entry (Engel & Völkers). Need manual browser for Lucas Fox, Remax, Savills."
+    reason: "1 entry (Engel & Völkers). Need manual browser for Lucas Fox, Remax, Savills (Cloudflare)."
   - priority: 8
     category: "translation"
-    reason: "0 entries. ProZ.com blocked — manual browser needed."
+    reason: "Now 🟡. TranslatorsCafe.com found 162 EN>ES translators. Alfonso Amo verified with phone+address."
   - priority: 9
     category: "medical"
-    reason: "0 entries. Cloudflare blocking. Manual browser needed for individual practitioners."
+    reason: "Now 🟡 but 0 confirmed English. Yelp leads + Overpass data need individual verification (phone calls)."
 
 # ============================================================================
 # BLOCKERS (known from previous attempts)
@@ -207,8 +207,15 @@ blockers:
   google_maps: "Consent wall — headless browser cannot bypass"
   bing: "Returns empty via curl and Obscura for local Spanish queries"
   duckduckgo: "CAPTCHA on first query"
-  overpass: "Intermittent availability (HTTP 406). Worked in this session for pubs and hotels."
+  overpass: "Intermittent availability (HTTP 406). Worked in this round for pubs, hotels, medical."
   mcp_fetch: "HTTP 403/404 for many Spanish news/sites"
-  cloudflare: "Blocks ProZ.com, Lucas Fox, Idealista, TopDoctors, Savills"
-  workaround: "Reuse from related projects + direct website verification + Expat.com directory + manual known entries"
-  remaining: "Categories still blocked (translation, medical, real estate details) need a manual interactive browser session to bypass Cloudflare walls"
+  cloudflare: "Blocks ProZ.com, Lucas Fox, Idealista, TopDoctors, Savills, ATA, Sanitas, Adeslas"
+  doctoralia: "SPA routing — all direct URLs return 404"
+  workaround: "Reuse from related projects + TranslatorsCafe.com + Yelp.es + Expat.com + Overpass + direct website verification"
+  new_tools_unblocked:
+    translatorscafe: "✅ Worked. 162 EN>ES translators in Seville."
+    yelp_es: "✅ Worked for medical/dental keyword search. Weak signal (no explicit EN confirmation)."
+    overpass_medical: "✅ Worked. 30+ clinics/dentists with verified GPS+phones."
+    expat_directory: "✅ Worked. 6 expat service providers with phone numbers."
+    wayback_machine: "⚠️ Available but not tested for these sites."
+  remaining: "Manual interactive browser session still needed for Cloudflare sites (ProZ.com, Lucas Fox, TopDoctors) and to verify individual websites of medical/dental providers."
