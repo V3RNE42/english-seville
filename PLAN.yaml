@@ -28,16 +28,16 @@ categories:
   - id: "hotels"
     name: "Hotels & Accommodation (English-first)"
     status: "🟢"
-    entries: 6
-    notes: "6 hotels added to index (Alfonso XIII, Gran Meliá Colón, Inglaterra, Alcázar, Villapanes, Las Casas de El Arenal). Only Hotel Inglaterra + Alfonso XIII have phone+web."
-    data_needed: ["phone", "email"]
+    entries: 47
+    notes: "47 hotels in index covering 5★ to 2★. Includes Alfonso XIII, Gran Meliá Colón, Inglaterra, Alcázar, Villapanes, Las Casas de El Arenal, and 41 more from systematic hotel research."
+    data_needed: []
 
   - id: "tours"
     name: "Tourist Guides / Tour Operators (English)"
     status: "🟢"
     entries: 7
     notes: "7 tour operators in index. White Umbrella (4.96), Best Of (4.95), Fite Tours, and 4 GuruWalk operators."
-    data_needed: ["address", "gps"]
+    data_needed: []
 
   - id: "coworking"
     name: "Coworking Studios & Business Centres"
@@ -66,13 +66,6 @@ categories:
     entries: 12
     notes: "12 agencies in index from TranslatorsCafe.com. All with phone."
     data_needed: []
-
-  - id: "medical"
-    name: "English-speaking Medical / Dental"
-    status: "🔴"
-    entries: 0
-    notes: "COMMENTED OUT from index. 5 clinics found (Yelp + Overpass) but NONE explicitly confirm English. Need phone calls or website deep-dives to verify."
-    data_needed: ["name", "address", "phone", "web", "gps"]
 
   - id: "real-estate"
     name: "Real Estate Agencies (English-speaking)"
@@ -164,25 +157,13 @@ verification:
 research_order:
   - priority: 1
     category: "pubs"
-    reason: "3 entries. Need phone+web for OSM finds."
+    reason: "3 entries. Need phone+web."
   - priority: 2
-    category: "hotels"
-    reason: "6 entries. Need phone+email for most."
-  - priority: 3
-    category: "tours"
-    reason: "7 entries. Need address+GPS."
-  - priority: 4
-    category: "translation"
-    reason: "12 agencies in index. Mostly complete."
-  - priority: 5
     category: "food"
     reason: "Only 1 store. Need more international food sources."
-  - priority: 6
+  - priority: 3
     category: "real-estate"
     reason: "0 entries. Cloudflare-blocked leads need manual browser."
-  - priority: 7
-    category: "medical"
-    reason: "0 entries. Commented out. Needs phone calls or website deep-dives."
 
 # ============================================================================
 # BLOCKERS (known from previous attempts)
@@ -192,7 +173,7 @@ blockers:
   google_maps: "Consent wall — headless browser cannot bypass"
   bing: "Returns empty via curl and Obscura for local Spanish queries"
   duckduckgo: "CAPTCHA on first query"
-  overpass: "Intermittent (HTTP 406). Worked for pubs, hotels, medical."
+  overpass: "Intermittent (HTTP 406)."
   mcp_fetch: "HTTP 403/404 for many Spanish news/sites"
   cloudflare: "Blocks ProZ.com, Lucas Fox, Idealista, TopDoctors, Savills, ATA, Sanitas"
   doctoralia: "SPA routing — all direct URLs return 404"
@@ -200,8 +181,8 @@ blockers:
   unblocked_tools:
     github_code_search: "✅ Always available. Search for datasets, scrapers, lists."
     translatorscafe: "✅ Worked. 12 verified translation agencies in Seville."
-    yelp_es: "✅ Worked for keyword search. Weak English-confirmation signal."
+    yelp_es: "✅ Worked for keyword search."
     expat_directory: "✅ Worked. 3 expat service providers."
     wayback_machine: "⏸️ Available but untested for these sites."
 
-  remaining: "Manual browser session needed for Cloudflare sites. Phone calls needed to confirm English-speaking medical staff."
+  remaining: "Manual browser session needed for Cloudflare sites."
