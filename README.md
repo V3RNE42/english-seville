@@ -15,18 +15,18 @@ Only **non-educational** English-first businesses in **Seville city** (41001–4
 
 | Category | Status | Count |
 |----------|--------|-------|
-| British/Irish Pubs | 🟡 Seed data | 1 |
-| Hotels & Accommodation | 🔴 Pending | 0 |
-| Tourist Guides / Tours | 🔴 Pending | 0 |
-| Coworking Studios | 🔴 Pending | 0 |
-| International Food Stores | 🟡 Seed data | 1 |
-| Expat Services (legal, tax, relocation) | 🔴 Pending | 0 |
-| Translation & Interpretation | 🔴 Pending | 0 |
-| English-speaking Medical/Dental | 🔴 Pending | 0 |
+| Translation & Interpretation | 🟢 Complete | 12 |
+| Tourist Guides / Tours | 🟢 Complete | 7 |
+| Hotels & Accommodation | 🟢 Complete | 6 |
+| Expat Services (legal, tax, relocation) | 🟢 Complete | 3 |
+| Coworking Studios | 🟡 Partial | 2 |
+| British/Irish Pubs | 🟡 Partial | 3 |
+| International Food Stores | 🟡 Partial | 1 |
+| English-speaking Medical/Dental | 🔴 Commented out | 0 |
 | Real Estate (English-speaking) | 🔴 Pending | 0 |
-| **Total verified** | | **2** |
+| **Total verified** | | **34** |
 
-**Legend:** 🟢 Complete / 🟡 Partial / 🔴 Not yet researched
+**Legend:** 🟢 Complete (≥5) / 🟡 Partial (1-4) / 🔴 Not yet researched
 
 ## Map
 

@@ -21,47 +21,30 @@ categories:
   - id: "pubs"
     name: "British / Irish Pubs & English-language Bars"
     status: "🟡"
-    entries: 5
-    notes: "5 pubs found via OSM (The Merchant, O'Neill's ×2, The Clan Scottish, The Boss). No phone/web in OSM data."
+    entries: 3
+    notes: "3 pubs in index (The Merchant, O'Neill's, The Clan Scottish). OSM found 5 but only 3 with usable coordinates. No phone/web confirmed."
     data_needed: ["phone", "web", "email"]
-    search_terms:
-      - "British pub Seville"
-      - "Irish pub Seville"
-      - "English bar Seville"
-      - "pub inglés Sevilla"
 
   - id: "hotels"
     name: "Hotels & Accommodation (English-first)"
-    status: "🟡"
+    status: "🟢"
     entries: 6
-    notes: "6 hotels verified (Alfonso XIII, Gran Meliá Colón, Inglaterra, Alcázar, Villapanes, Las Casas de El Arenal). Only Hotel Inglaterra has phone+web+email."
+    notes: "6 hotels added to index (Alfonso XIII, Gran Meliá Colón, Inglaterra, Alcázar, Villapanes, Las Casas de El Arenal). Only Hotel Inglaterra + Alfonso XIII have phone+web."
     data_needed: ["phone", "email"]
-    search_terms:
-      - "English-speaking hotel Seville"
-      - "international hotel Seville english"
-      - "boutique hotel Seville english staff"
 
   - id: "tours"
     name: "Tourist Guides / Tour Operators (English)"
-    status: "🟡"
-    entries: 3
-    notes: "3 tour operators verified (White Umbrella Tours, Fite Tours, Best Of Sevilla Tour)."
+    status: "🟢"
+    entries: 7
+    notes: "7 tour operators in index. White Umbrella (4.96), Best Of (4.95), Fite Tours, and 4 GuruWalk operators."
     data_needed: ["address", "gps"]
-    search_terms:
-      - "English walking tour Seville"
-      - "free tour Seville english"
-      - "tour guide Seville english"
 
   - id: "coworking"
     name: "Coworking Studios & Business Centres"
     status: "🟡"
-    entries: 4
-    notes: "4 spaces verified (Arcadia, Gallo Rojo, INN Offices, Spaces)."
-    data_needed: ["phone", "address"]
-    search_terms:
-      - "coworking Seville english"
-      - "digital nomad Seville coworking"
-      - "business centre Seville"
+    entries: 2
+    notes: "Arcadia Coworking (phone+web+GPS) and Gallo Rojo (web+GPS). All verified."
+    data_needed: []
 
   - id: "food"
     name: "International Food Stores & Specialty Groceries"
@@ -69,54 +52,34 @@ categories:
     entries: 1
     notes: "Taste of America verified. British shops, international delis unresearched."
     data_needed: ["address", "phone", "email"]
-    search_terms:
-      - "British food shop Seville"
-      - "international supermarket Seville"
-      - "American food store Seville"
 
   - id: "expat-services"
     name: "Expat Services (Legal, Tax, Relocation)"
     status: "🟡"
-    entries: 6
-    notes: "Found via Expat.com directory (TrustedSeville, movetosevilla.com, Relocations Sevilla Center, Llucia Abogados, Tatiana Vialaret, Wolffinance)."
+    entries: 3
+    notes: "TrustedSeville, Wolffinance, IN Consultoría in index. Found via Expat.com."
     data_needed: ["web", "email"]
-    search_terms:
-      - "English-speaking lawyer Seville"
-      - "English accountant Seville"
-      - "relocation services Seville"
 
   - id: "translation"
     name: "Translation & Interpretation Services"
-    status: "🟡"
-    entries: 1
-    notes: "TranslatorsCafe.com returned 162 EN>ES translators. Alfonso Amo verified."
-    data_needed: ["phone", "web", "email"]
-    search_terms:
-      - "English translator Seville"
-      - "translation services Seville"
-      - "interpreter Seville english"
+    status: "🟢"
+    entries: 12
+    notes: "12 agencies in index from TranslatorsCafe.com. All with phone."
+    data_needed: []
 
   - id: "medical"
     name: "English-speaking Medical / Dental"
-    status: "🟡"
+    status: "🔴"
     entries: 0
-    notes: "Yelp + Overpass found 30+ clinics but NONE explicitly confirm English. Needs individual verification."
+    notes: "COMMENTED OUT from index. 5 clinics found (Yelp + Overpass) but NONE explicitly confirm English. Need phone calls or website deep-dives to verify."
     data_needed: ["name", "address", "phone", "web", "gps"]
-    search_terms:
-      - "English-speaking doctor Seville"
-      - "English dentist Seville"
-      - "international clinic Seville"
 
   - id: "real-estate"
     name: "Real Estate Agencies (English-speaking)"
-    status: "🟡"
-    entries: 1
-    notes: "Engel & Völkers verified. Lucas Fox, Remax, Savills blocked by Cloudflare."
+    status: "🔴"
+    entries: 0
+    notes: "Engel & Völkers verified in previous pass but not yet in index. Lucas Fox, Remax, Savills blocked by Cloudflare."
     data_needed: ["address", "phone", "email"]
-    search_terms:
-      - "English-speaking estate agent Seville"
-      - "real estate Seville english"
-      - "international property Seville"
 
 # ============================================================================
 # METHODOLOGY
@@ -201,31 +164,25 @@ verification:
 research_order:
   - priority: 1
     category: "pubs"
-    reason: "5 entries. Need phone+web for OSM finds."
+    reason: "3 entries. Need phone+web for OSM finds."
   - priority: 2
     category: "hotels"
     reason: "6 entries. Need phone+email for most."
   - priority: 3
     category: "tours"
-    reason: "3 entries. Need address+GPS."
+    reason: "7 entries. Need address+GPS."
   - priority: 4
-    category: "coworking"
-    reason: "4 entries. Need phone+address."
-  - priority: 5
     category: "translation"
-    reason: "162 translators found. Need to verify top candidates."
-  - priority: 6
-    category: "expat-services"
-    reason: "6 providers. Need web+email."
-  - priority: 7
-    category: "real-estate"
-    reason: "1 entry + Cloudflare-blocked leads need manual browser."
-  - priority: 8
+    reason: "12 agencies in index. Mostly complete."
+  - priority: 5
     category: "food"
     reason: "Only 1 store. Need more international food sources."
-  - priority: 9
+  - priority: 6
+    category: "real-estate"
+    reason: "0 entries. Cloudflare-blocked leads need manual browser."
+  - priority: 7
     category: "medical"
-    reason: "0 confirmed English-speaking. Needs phone calls or website deep-dives."
+    reason: "0 entries. Commented out. Needs phone calls or website deep-dives."
 
 # ============================================================================
 # BLOCKERS (known from previous attempts)
@@ -242,10 +199,9 @@ blockers:
 
   unblocked_tools:
     github_code_search: "✅ Always available. Search for datasets, scrapers, lists."
-    translatorscafe: "✅ Worked. 162 EN>ES translators in Seville."
+    translatorscafe: "✅ Worked. 12 verified translation agencies in Seville."
     yelp_es: "✅ Worked for keyword search. Weak English-confirmation signal."
-    overpass_generic: "✅ Worked for pubs, hotels, coworking, medical."
-    expat_directory: "✅ Worked. 6 expat service providers."
+    expat_directory: "✅ Worked. 3 expat service providers."
     wayback_machine: "⏸️ Available but untested for these sites."
 
   remaining: "Manual browser session needed for Cloudflare sites. Phone calls needed to confirm English-speaking medical staff."

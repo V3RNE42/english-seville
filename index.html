@@ -71,7 +71,7 @@ p{margin:0 0 18px;color:var(--muted)}
 <div class="legend" id="legend"></div>
 <div id="map"><div class="loader" id="loader"><div class="loader-track"><div class="loader-bar"></div><div class="loader-ball"></div></div><span class="loader-text">Loading map</span></div></div>
 <p class="fallback">Map not loading? The cards below have all data.</p>
-<section class="cards"><h2>33 Verified Entries</h2><div class="grid" id="cards"></div></section>
+<section class="cards"><h2>34 Verified Entries</h2><div class="grid" id="cards"></div></section>
 </main>
 <div class="toast" id="toast"></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -100,17 +100,26 @@ const D=[
 {n:20,name:"Sevilla Free Tours",c:"Tour",a:"English walking tour",la:37.385,lo:-5.992},
 {n:21,name:"Hello Sevilla Tours",c:"Tour",a:"Monumental free tour",la:37.384,lo:-5.991},
 {n:22,name:"Fite Tours",c:"Tour",p:"661051371",w:"https://www.fitetours.com",a:"Seville city centre",la:37.388,lo:-5.996},
-{n:23,name:"Consulta Médica Nervión",c:"Medical",p:"954923008",a:"C/ Campo de Los Martires 9, 41005",la:37.375,lo:-5.965},
-{n:24,name:"Centro Médico Arenal",c:"Medical",p:"954293338",a:"C/ Pastor y Landero 13, 41001",la:37.383,lo:-5.997},
-{n:25,name:"Medicur",c:"Medical",p:"954535000",a:"C/ José de la Cámara 3, 41018",la:37.378,lo:-5.954},
-{n:26,name:"Hospital Virgen del Rocío",c:"Medical",p:"955012000",a:"Av. Manuel Siurot",la:37.360,lo:-5.985},
-{n:27,name:"Clínica Dermatológica Triana",c:"Medical",p:"954334483",a:"C/ Espartinas 3, 41010",la:37.384,lo:-6.010},
-{n:28,name:"Taste of America",c:"Food",w:"https://tasteofamerica.es",a:"American food store",la:37.389,lo:-5.992},
-{n:29,name:"The Merchant Pub",c:"Pub",a:"C/ Rafael González Abreu, 41001",la:37.390,lo:-6.000},
-{n:30,name:"O'Neill's Irish Pub",c:"Pub",a:"C/ Adriano, 41001",la:37.386,lo:-6.000},
-{n:31,name:"The Clan Scottish Pub",c:"Pub",a:"C/ Adriano 3, 41001",la:37.386,lo:-5.997},
-{n:32,name:"Arcadia Coworking",c:"Cowork",p:"654865194",w:"https://arcadiacoworking.com",a:"C/ Cuna 16, 41004",la:37.391,lo:-5.993},
-{n:33,name:"Gallo Rojo Coworking",c:"Cowork",w:"https://gallorojo.es",a:"C/ Madre María 9, 41003",la:37.395,lo:-5.991},
+{n:23,name:"Taste of America",c:"Food",w:"https://tasteofamerica.es",a:"American food store",la:37.389,lo:-5.992},
+{n:24,name:"The Merchant Pub",c:"Pub",a:"C/ Rafael González Abreu, 41001",la:37.390,lo:-6.000},
+{n:25,name:"O'Neill's Irish Pub",c:"Pub",a:"C/ Adriano, 41001",la:37.386,lo:-6.000},
+{n:26,name:"The Clan Scottish Pub",c:"Pub",a:"C/ Adriano 3, 41001",la:37.386,lo:-5.997},
+{n:27,name:"Arcadia Coworking",c:"Cowork",p:"654865194",w:"https://arcadiacoworking.com",a:"C/ Cuna 16, 41004",la:37.391,lo:-5.993},
+{n:28,name:"Gallo Rojo Coworking",c:"Cowork",w:"https://gallorojo.es",a:"C/ Madre María 9, 41003",la:37.395,lo:-5.991},
+{n:29,name:"Hotel Alfonso XIII",c:"Hotel",p:"954917000",w:"https://www.marriott.com/es/hotels/svqlc-hotel-alfonso-xiii-a-luxury-collection-hotel-seville/",a:"C/ San Fernando 2, 41004",la:37.382,lo:-5.993},
+{n:30,name:"Gran Meliá Colón",c:"Hotel",w:"https://www.melia.com/es/hoteles/espana/sevilla/gran-melia-colon",a:"C/ Canalejas 1, 41001",la:37.391,lo:-5.999},
+{n:31,name:"Hotel Inglaterra",c:"Hotel",p:"954224970",w:"https://www.hotelinglaterra.es",a:"Plaza Nueva 7, 41001",la:37.388,lo:-5.997},
+{n:32,name:"Hotel Alcázar",c:"Hotel",a:"Av. Menéndez Pelayo, 41004",la:37.383,lo:-5.987},
+{n:33,name:"Palacio de Villapanes",c:"Hotel",a:"C/ Santiago, 41003",la:37.392,lo:-5.986},
+{n:34,name:"Las Casas de El Arenal",c:"Hotel",a:"C/ San Vicente 19, 41001 (Arenal)",la:37.388,lo:-6.003},
+/*
+=== MEDICAL entries (commented out — not English-confirmed) ===
+{n:XX,name:"Consulta Médica Nervión",c:"Medical",p:"954923008",a:"C/ Campo de Los Martires 9, 41005",la:37.375,lo:-5.965},
+{n:XX,name:"Centro Médico Arenal",c:"Medical",p:"954293338",a:"C/ Pastor y Landero 13, 41001",la:37.383,lo:-5.997},
+{n:XX,name:"Medicur",c:"Medical",p:"954535000",a:"C/ José de la Cámara 3, 41018",la:37.378,lo:-5.954},
+{n:XX,name:"Hospital Virgen del Rocío",c:"Medical",p:"955012000",a:"Av. Manuel Siurot",la:37.360,lo:-5.985},
+{n:XX,name:"Clínica Dermatológica Triana",c:"Medical",p:"954334483",a:"C/ Espartinas 3, 41010",la:37.384,lo:-6.010},
+*/
 ];
 // Stats
 const counts={};D.forEach(d=>{counts[d.c]=(counts[d.c]||0)+1});const st=document.getElementById("stats");Object.entries(counts).forEach(([k,v])=>{const e=document.createElement("div");e.className="stat";e.innerHTML=`${k} <span>${v}</span>`;st.appendChild(e)});
