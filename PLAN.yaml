@@ -1,0 +1,212 @@
+# ============================================================================
+# PLAN — English-First Businesses in Seville (non-school)
+# ============================================================================
+# Scope: Seville city (41001–41020). NO schools, NO academies.
+# Those are in V3RNE42/centros_compatibles.
+#
+# Categories to research below. Each category gets its own branch of work.
+# ============================================================================
+
+meta:
+  repo: "V3RNE42/english-seville"
+  scope: "Seville city (postcodes 41001-41020)"
+  excludes: ["schools", "language academies", "colleges", "universities"]
+  excludes_repo: "https://github.com/V3RNE42/centros_compatibles"
+  status_legend:
+    "🟢": "Complete (≥5 verified entries with phone+web+address+GPS)"
+    "🟡": "Partial (1-4 entries or incomplete data)"
+    "🔴": "Not researched"
+
+categories:
+  - id: "pubs"
+    name: "British / Irish Pubs & English-language Bars"
+    status: "🟡"
+    entries: 1
+    notes: "The Merchant Pub verified via Facebook. Need: O'Neill's, Dubliners, others."
+    data_needed: ["name", "address", "phone", "gps"]
+    search_terms:
+      - "British pub Seville"
+      - "Irish pub Seville"
+      - "English bar Seville"
+      - "pub inglés Sevilla"
+
+  - id: "hotels"
+    name: "Hotels & Accommodation (English-first)"
+    status: "🔴"
+    entries: 0
+    notes: "Hotels that market primarily to English-speaking tourists."
+    data_needed: ["name", "address", "phone", "web", "gps"]
+    search_terms:
+      - "English-speaking hotel Seville"
+      - "international hotel Seville english"
+      - "boutique hotel Seville english staff"
+
+  - id: "tours"
+    name: "Tourist Guides / Tour Operators (English)"
+    status: "🔴"
+    entries: 0
+    notes: "Walking tours, bike tours, food tours, flamenco shows marketed in English."
+    data_needed: ["name", "phone", "web", "gps"]
+    search_terms:
+      - "English walking tour Seville"
+      - "free tour Seville english"
+      - "tour guide Seville english"
+      - "food tour Seville english"
+
+  - id: "coworking"
+    name: "Coworking Studios & Business Centres"
+    status: "🔴"
+    entries: 0
+    notes: "Spaces popular with digital nomads / expats. English-friendly."
+    data_needed: ["name", "address", "phone", "web", "gps"]
+    search_terms:
+      - "coworking Seville english"
+      - "digital nomad Seville coworking"
+      - "business centre Seville"
+
+  - id: "food"
+    name: "International Food Stores & Specialty Groceries"
+    status: "🟡"
+    entries: 1
+    notes: "Taste of America verified. Need British shops, international delis."
+    data_needed: ["name", "address", "phone", "web"]
+    search_terms:
+      - "British food shop Seville"
+      - "international supermarket Seville"
+      - "American food store Seville"
+      - "imported food Seville"
+
+  - id: "expat-services"
+    name: "Expat Services (Legal, Tax, Relocation)"
+    status: "🔴"
+    entries: 0
+    notes: "Lawyers, accountants, gestorías that work in English."
+    data_needed: ["name", "phone", "web", "address"]
+    search_terms:
+      - "English-speaking lawyer Seville"
+      - "English accountant Seville"
+      - "relocation services Seville"
+      - "gestoría inglés Sevilla"
+
+  - id: "translation"
+    name: "Translation & Interpretation Services"
+    status: "🔴"
+    entries: 0
+    notes: "Professional EN<>ES translators and interpreters based in Seville."
+    data_needed: ["name", "phone", "web"]
+    search_terms:
+      - "English translator Seville"
+      - "translation services Seville"
+      - "interpreter Seville english"
+
+  - id: "medical"
+    name: "English-speaking Medical / Dental"
+    status: "🔴"
+    entries: 0
+    notes: "Clinics, dentists, GPs that advertise English service."
+    data_needed: ["name", "address", "phone", "web", "gps"]
+    search_terms:
+      - "English-speaking doctor Seville"
+      - "English dentist Seville"
+      - "international clinic Seville"
+      - "private hospital Seville english"
+
+  - id: "real-estate"
+    name: "Real Estate Agencies (English-speaking)"
+    status: "🔴"
+    entries: 0
+    notes: "Agencies that market to foreign buyers/renters."
+    data_needed: ["name", "phone", "web", "address"]
+    search_terms:
+      - "English-speaking estate agent Seville"
+      - "real estate Seville english"
+      - "international property Seville"
+
+# ============================================================================
+# METHODOLOGY
+# ============================================================================
+
+methodology:
+  layer_0_reuse:
+    description: "Check existing repos for relevant entities"
+    repos_to_check:
+      - "V3RNE42/centros_compatibles (only non-school entities)"
+  layer_1_open_data:
+    description: "No open data CSV for these categories — skip"
+    status: "not applicable"
+  layer_2_web_scraping:
+    description: "5-level scrape per entity"
+    levels:
+      - "JSON-LD extraction"
+      - "tel:/wa.me/data-phone attributes"
+      - "phonenumbers library (Python)"
+      - "Obscura headless browser"
+      - "OCR (Tesseract) — last resort"
+  layer_2b_search_engines:
+    description: "Bing via Obscura for initial discovery"
+    warning: "Geo-located results. Always add 'Seville' explicitly."
+  layer_2c_overpass:
+    description: "OSM Overpass API for each category"
+    query_template: |
+      [out:json];
+      area["name"="Seville"]["admin_level"="7"];
+      (node[KEY=VALUE](area); way[KEY=VALUE](area); rel[KEY=VALUE](area););
+      out center 30;
+    osm_tags_by_category:
+      pubs: "amenity=pub"
+      hotels: "tourism=hotel"
+      coworking: "office=coworking"
+      food: "shop=supermarket OR shop=convenience OR shop=deli"
+  layer_3_accept_not_found:
+    description: "After exhausting layers, report NOT_FOUND. Never hallucinate."
+
+verification:
+  url: "curl -sI --max-time 6 URL | head -1 (2xx/3xx + title match)"
+  phone: "Filter by Sevilla prefix (95/954/955/6/7) + 9 digits"
+  address: "Nominatim API for coordinates"
+  golden_rule: "HTTP 200 ≠ correct site. Check <title>."
+
+# ============================================================================
+# RESEARCH ORDER (priority)
+# ============================================================================
+
+research_order:
+  - priority: 1
+    category: "pubs"
+    reason: "Already started (1 entry). Most visible English-first category."
+  - priority: 2
+    category: "tours"
+    reason: "High visibility, many operators, relatively easy to verify."
+  - priority: 3
+    category: "hotels"
+    reason: "Good web presence, easy to verify."
+  - priority: 4
+    category: "food"
+    reason: "Already started (1 entry). Small category to complete."
+  - priority: 5
+    category: "coworking"
+    reason: "Digital nomad hub — likely several spaces."
+  - priority: 6
+    category: "expat-services"
+    reason: "Harder to find but valuable for expat community."
+  - priority: 7
+    category: "translation"
+    reason: "Small category, few providers."
+  - priority: 8
+    category: "medical"
+    reason: "Important but difficult to verify English proficiency."
+  - priority: 9
+    category: "real-estate"
+    reason: "Many agencies claim English — need to distinguish marketing from real capability."
+
+# ============================================================================
+# BLOCKERS (known from previous attempts)
+# ============================================================================
+
+blockers:
+  google_maps: "Consent wall — headless browser cannot bypass"
+  bing: "Returns empty via curl and Obscura for local Spanish queries"
+  duckduckgo: "CAPTCHA on first query"
+  overpass: "Intermittent availability (HTTP 406). Zero pubs tagged in Seville OSM."
+  mcp_fetch: "HTTP 403/404 for many Spanish news/sites"
+  workaround: "Reuse from related projects + direct website verification + manual known entries"
