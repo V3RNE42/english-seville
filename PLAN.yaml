@@ -22,7 +22,7 @@ categories:
     name: "British / Irish Pubs & English-language Bars"
     status: "🟡"
     entries: 5
-    notes: "5 pubs found via OSM (The Merchant, O'Neill's ×2, The Clan Scottish, The Boss). No phone/web in OSM data. Dubliners and others not found in OSM."
+    notes: "5 pubs found via OSM (The Merchant, O'Neill's ×2, The Clan Scottish, The Boss). No phone/web in OSM data."
     data_needed: ["phone", "web", "email"]
     search_terms:
       - "British pub Seville"
@@ -34,7 +34,7 @@ categories:
     name: "Hotels & Accommodation (English-first)"
     status: "🟡"
     entries: 6
-    notes: "6 hotels verified (Alfonso XIII, Gran Meliá Colón, Inglaterra, Alcázar, Villapanes, Las Casas de El Arenal). Only Hotel Inglaterra has phone+web+email. Need phone for the rest."
+    notes: "6 hotels verified (Alfonso XIII, Gran Meliá Colón, Inglaterra, Alcázar, Villapanes, Las Casas de El Arenal). Only Hotel Inglaterra has phone+web+email."
     data_needed: ["phone", "email"]
     search_terms:
       - "English-speaking hotel Seville"
@@ -45,19 +45,18 @@ categories:
     name: "Tourist Guides / Tour Operators (English)"
     status: "🟡"
     entries: 3
-    notes: "3 tour operators verified (White Umbrella Tours, Fite Tours, Best Of Sevilla Tour). 2 have phone+web+email. Best Of Sevilla Tour listed on GuruWalk with no direct website."
+    notes: "3 tour operators verified (White Umbrella Tours, Fite Tours, Best Of Sevilla Tour)."
     data_needed: ["address", "gps"]
     search_terms:
       - "English walking tour Seville"
       - "free tour Seville english"
       - "tour guide Seville english"
-      - "food tour Seville english"
 
   - id: "coworking"
     name: "Coworking Studios & Business Centres"
     status: "🟡"
     entries: 4
-    notes: "4 spaces verified (Arcadia, Gallo Rojo, INN Offices, Spaces). Arcadia has full data. Gallo Rojo limited English. INN Offices verified via website. Spaces via OSM."
+    notes: "4 spaces verified (Arcadia, Gallo Rojo, INN Offices, Spaces)."
     data_needed: ["phone", "address"]
     search_terms:
       - "coworking Seville english"
@@ -68,31 +67,29 @@ categories:
     name: "International Food Stores & Specialty Groceries"
     status: "🟡"
     entries: 1
-    notes: "Taste of America verified. No new food stores found. British shops, international delis remain unresearched."
+    notes: "Taste of America verified. British shops, international delis unresearched."
     data_needed: ["address", "phone", "email"]
     search_terms:
       - "British food shop Seville"
       - "international supermarket Seville"
       - "American food store Seville"
-      - "imported food Seville"
 
   - id: "expat-services"
     name: "Expat Services (Legal, Tax, Relocation)"
     status: "🟡"
     entries: 6
-    notes: "6 providers found via Expat.com directory (TrustedSeville, movetosevilla.com, Relocations Sevilla Center, Llucia Abogados, Tatiana Vialaret, Wolffinance). All have phone. Websites mostly not found."
+    notes: "Found via Expat.com directory (TrustedSeville, movetosevilla.com, Relocations Sevilla Center, Llucia Abogados, Tatiana Vialaret, Wolffinance)."
     data_needed: ["web", "email"]
     search_terms:
       - "English-speaking lawyer Seville"
       - "English accountant Seville"
       - "relocation services Seville"
-      - "gestoría inglés Sevilla"
 
   - id: "translation"
     name: "Translation & Interpretation Services"
     status: "🟡"
     entries: 1
-    notes: "TranslatorsCafe.com returned 162 EN>ES translators in Seville. Alfonso Amo verified with phone+address. 25+ individual names confirmed. ATA, ACT blocked. ProZ.com Cloudflare. Best source so far: TranslatorsCafe."
+    notes: "TranslatorsCafe.com returned 162 EN>ES translators. Alfonso Amo verified."
     data_needed: ["phone", "web", "email"]
     search_terms:
       - "English translator Seville"
@@ -103,19 +100,18 @@ categories:
     name: "English-speaking Medical / Dental"
     status: "🟡"
     entries: 0
-    notes: "Yelp 'english' keyword search returned 7 medical/dental leads (Consulta Médica Nervión, Centro Médico Cervantes Castilla, Clínica Dental Aníbal González, etc.). Overpass found 30+ clinics/dentists with verified phones. However, NONE explicitly confirm English-speaking staff. Need individual calls or website checks."
+    notes: "Yelp + Overpass found 30+ clinics but NONE explicitly confirm English. Needs individual verification."
     data_needed: ["name", "address", "phone", "web", "gps"]
     search_terms:
       - "English-speaking doctor Seville"
       - "English dentist Seville"
       - "international clinic Seville"
-      - "private hospital Seville english"
 
   - id: "real-estate"
     name: "Real Estate Agencies (English-speaking)"
     status: "🟡"
     entries: 1
-    notes: "Engel & Völkers Seville verified with English site. Lucas Fox, Remax, Savills partially verified (blocked by Cloudflare). Need manual browser session for full details."
+    notes: "Engel & Völkers verified. Lucas Fox, Remax, Savills blocked by Cloudflare."
     data_needed: ["address", "phone", "email"]
     search_terms:
       - "English-speaking estate agent Seville"
@@ -128,26 +124,54 @@ categories:
 
 methodology:
   layer_0_scraping_tools:
-    description: "Check user's GitHub repos for existing scraping utilities"
-    notes: >
-      User mentioned GitHub repos containing scraping scripts and approaches
-      that could accelerate data collection — not pre-existing data repos.
-      Review repos for: headless browser scripts, phone extraction patterns,
-      Overpass query builders, directory scraper templates, OSINT utilities.
+    description: "Search GitHub code across ALL users/organizations for data + scrapers"
+    why: >
+      When Bing, Google Maps, Overpass all fail, GitHub is NOT blocked.
+      People publish datasets, travel lists, crawler output, JSON dumps,
+      and scraper scripts on GitHub. Search it for data + techniques.
+    search_patterns:
+      data_type: "Find raw datasets"
+      queries:
+        - "seville pubs json"
+        - "sevilla bares csv"
+        - "seville hotels list"
+        - "sevilla restaurantes json"
+        - "seville coworking"
+        - "english speaking seville list"
+        - "sevilla expat guide"
+        - "andalusia tourism data"
+      tool_type: "Find scraping tools & scripts"
+      queries:
+        - "scrape google maps business python"
+        - "overpass api query builder script"
+        - "spanish business directory scraper"
+        - "yelp api extractor python"
+        - "expat directory scraper"
+      code_type: "Find code mentioning specific entities with contact data"
+      queries:
+        - "Merchant Pub Seville"
+        - "Taste of America Seville"
+        - "White Umbrella Tours Seville"
+    tool: "mcp_github_search_code"
+    output: "Extract URLs, scripts, or data files found. Verify before using."
+
   layer_1_open_data:
     description: "No open data CSV for these categories — skip"
     status: "not applicable"
+
   layer_2_web_scraping:
     description: "5-level scrape per entity"
     levels:
       - "JSON-LD extraction"
       - "tel:/wa.me/data-phone attributes"
       - "phonenumbers library (Python)"
-      - "Obscura headless browser"
+      - "Obscura headless browser (--dump original)"
       - "OCR (Tesseract) — last resort"
+
   layer_2b_search_engines:
     description: "Bing via Obscura for initial discovery"
-    warning: "Geo-located results. Always add 'Seville' explicitly."
+    warning: "Geo-located results. Always add 'Seville' explicitly. Often blocked."
+
   layer_2c_overpass:
     description: "OSM Overpass API for each category"
     query_template: |
@@ -159,7 +183,8 @@ methodology:
       pubs: "amenity=pub"
       hotels: "tourism=hotel"
       coworking: "office=coworking"
-      food: "shop=supermarket OR shop=convenience OR shop=deli"
+      food: "shop=supermarket"
+
   layer_3_accept_not_found:
     description: "After exhausting layers, report NOT_FOUND. Never hallucinate."
 
@@ -176,31 +201,31 @@ verification:
 research_order:
   - priority: 1
     category: "pubs"
-    reason: "Completed — 5 entries."
+    reason: "5 entries. Need phone+web for OSM finds."
   - priority: 2
-    category: "tours"
-    reason: "Completed — 3 entries."
-  - priority: 3
     category: "hotels"
-    reason: "Completed — 6 entries."
+    reason: "6 entries. Need phone+email for most."
+  - priority: 3
+    category: "tours"
+    reason: "3 entries. Need address+GPS."
   - priority: 4
     category: "coworking"
-    reason: "Completed — 4 entries."
+    reason: "4 entries. Need phone+address."
   - priority: 5
-    category: "expat-services"
-    reason: "Completed — 6 entries."
+    category: "translation"
+    reason: "162 translators found. Need to verify top candidates."
   - priority: 6
-    category: "food"
-    reason: "1 entry. Need more international food stores."
+    category: "expat-services"
+    reason: "6 providers. Need web+email."
   - priority: 7
     category: "real-estate"
-    reason: "1 entry (Engel & Völkers). Need manual browser for Lucas Fox, Remax, Savills (Cloudflare)."
+    reason: "1 entry + Cloudflare-blocked leads need manual browser."
   - priority: 8
-    category: "translation"
-    reason: "Now 🟡. TranslatorsCafe.com found 162 EN>ES translators. Alfonso Amo verified with phone+address."
+    category: "food"
+    reason: "Only 1 store. Need more international food sources."
   - priority: 9
     category: "medical"
-    reason: "Now 🟡 but 0 confirmed English. Yelp leads + Overpass data need individual verification (phone calls)."
+    reason: "0 confirmed English-speaking. Needs phone calls or website deep-dives."
 
 # ============================================================================
 # BLOCKERS (known from previous attempts)
@@ -210,14 +235,17 @@ blockers:
   google_maps: "Consent wall — headless browser cannot bypass"
   bing: "Returns empty via curl and Obscura for local Spanish queries"
   duckduckgo: "CAPTCHA on first query"
-  overpass: "Intermittent availability (HTTP 406). Worked in this round for pubs, hotels, medical."
+  overpass: "Intermittent (HTTP 406). Worked for pubs, hotels, medical."
   mcp_fetch: "HTTP 403/404 for many Spanish news/sites"
-  cloudflare: "Blocks ProZ.com, Lucas Fox, Idealista, TopDoctors, Savills, ATA, Sanitas, Adeslas"
+  cloudflare: "Blocks ProZ.com, Lucas Fox, Idealista, TopDoctors, Savills, ATA, Sanitas"
   doctoralia: "SPA routing — all direct URLs return 404"
-  workaround: "TranslatorsCafe.com + Yelp.es + Expat.com + Overpass + direct website verification"
-  new_tools_unblocked:
+
+  unblocked_tools:
+    github_code_search: "✅ Always available. Search for datasets, scrapers, lists."
     translatorscafe: "✅ Worked. 162 EN>ES translators in Seville."
-    yelp_es: "✅ Worked for medical/dental keyword search. Weak signal (no explicit EN confirmation)."
-    overpass_medical: "✅ Worked. 30+ clinics/dentists with verified GPS+phones."
-    expat_directory: "✅ Worked. 6 expat service providers with phone numbers."
-  remaining: "Manual interactive browser session still needed for Cloudflare sites (ProZ.com, Lucas Fox, TopDoctors) and to verify individual websites of medical/dental providers."
+    yelp_es: "✅ Worked for keyword search. Weak English-confirmation signal."
+    overpass_generic: "✅ Worked for pubs, hotels, coworking, medical."
+    expat_directory: "✅ Worked. 6 expat service providers."
+    wayback_machine: "⏸️ Available but untested for these sites."
+
+  remaining: "Manual browser session needed for Cloudflare sites. Phone calls needed to confirm English-speaking medical staff."
