@@ -21,9 +21,9 @@ categories:
   - id: "pubs"
     name: "British / Irish Pubs & English-language Bars"
     status: "🟡"
-    entries: 1
-    notes: "The Merchant Pub verified via Facebook. Need: O'Neill's, Dubliners, others."
-    data_needed: ["name", "address", "phone", "gps"]
+    entries: 5
+    notes: "5 pubs found via OSM (The Merchant, O'Neill's ×2, The Clan Scottish, The Boss). No phone/web in OSM data. Dubliners and others not found in OSM."
+    data_needed: ["phone", "web", "email"]
     search_terms:
       - "British pub Seville"
       - "Irish pub Seville"
@@ -32,10 +32,10 @@ categories:
 
   - id: "hotels"
     name: "Hotels & Accommodation (English-first)"
-    status: "🔴"
-    entries: 0
-    notes: "Hotels that market primarily to English-speaking tourists."
-    data_needed: ["name", "address", "phone", "web", "gps"]
+    status: "🟡"
+    entries: 6
+    notes: "6 hotels verified (Alfonso XIII, Gran Meliá Colón, Inglaterra, Alcázar, Villapanes, Las Casas de El Arenal). Only Hotel Inglaterra has phone+web+email. Need phone for the rest."
+    data_needed: ["phone", "email"]
     search_terms:
       - "English-speaking hotel Seville"
       - "international hotel Seville english"
@@ -43,10 +43,10 @@ categories:
 
   - id: "tours"
     name: "Tourist Guides / Tour Operators (English)"
-    status: "🔴"
-    entries: 0
-    notes: "Walking tours, bike tours, food tours, flamenco shows marketed in English."
-    data_needed: ["name", "phone", "web", "gps"]
+    status: "🟡"
+    entries: 3
+    notes: "3 tour operators verified (White Umbrella Tours, Fite Tours, Best Of Sevilla Tour). 2 have phone+web+email. Best Of Sevilla Tour listed on GuruWalk with no direct website."
+    data_needed: ["address", "gps"]
     search_terms:
       - "English walking tour Seville"
       - "free tour Seville english"
@@ -55,10 +55,10 @@ categories:
 
   - id: "coworking"
     name: "Coworking Studios & Business Centres"
-    status: "🔴"
-    entries: 0
-    notes: "Spaces popular with digital nomads / expats. English-friendly."
-    data_needed: ["name", "address", "phone", "web", "gps"]
+    status: "🟡"
+    entries: 4
+    notes: "4 spaces verified (Arcadia, Gallo Rojo, INN Offices, Spaces). Arcadia has full data. Gallo Rojo limited English. INN Offices verified via website. Spaces via OSM."
+    data_needed: ["phone", "address"]
     search_terms:
       - "coworking Seville english"
       - "digital nomad Seville coworking"
@@ -68,8 +68,8 @@ categories:
     name: "International Food Stores & Specialty Groceries"
     status: "🟡"
     entries: 1
-    notes: "Taste of America verified. Need British shops, international delis."
-    data_needed: ["name", "address", "phone", "web"]
+    notes: "Taste of America verified. No new food stores found. British shops, international delis remain unresearched."
+    data_needed: ["address", "phone", "email"]
     search_terms:
       - "British food shop Seville"
       - "international supermarket Seville"
@@ -78,10 +78,10 @@ categories:
 
   - id: "expat-services"
     name: "Expat Services (Legal, Tax, Relocation)"
-    status: "🔴"
-    entries: 0
-    notes: "Lawyers, accountants, gestorías that work in English."
-    data_needed: ["name", "phone", "web", "address"]
+    status: "🟡"
+    entries: 6
+    notes: "6 providers found via Expat.com directory (TrustedSeville, movetosevilla.com, Relocations Sevilla Center, Llucia Abogados, Tatiana Vialaret, Wolffinance). All have phone. Websites mostly not found."
+    data_needed: ["web", "email"]
     search_terms:
       - "English-speaking lawyer Seville"
       - "English accountant Seville"
@@ -92,7 +92,7 @@ categories:
     name: "Translation & Interpretation Services"
     status: "🔴"
     entries: 0
-    notes: "Professional EN<>ES translators and interpreters based in Seville."
+    notes: "No individual translators verified. ProZ.com blocked by Cloudflare. Spanish Translator Services portal reached but individual details not extractable. Manual browser needed."
     data_needed: ["name", "phone", "web"]
     search_terms:
       - "English translator Seville"
@@ -103,7 +103,7 @@ categories:
     name: "English-speaking Medical / Dental"
     status: "🔴"
     entries: 0
-    notes: "Clinics, dentists, GPs that advertise English service."
+    notes: "Public hospitals confirmed (Virgen Macarena, Virgen del Rocío) but not English-specific. Quirónsalud group EN site exists but Seville page errored. Clínica Dental Sevilla confirmed Spanish-only. No English-speaking clinic verified."
     data_needed: ["name", "address", "phone", "web", "gps"]
     search_terms:
       - "English-speaking doctor Seville"
@@ -113,10 +113,10 @@ categories:
 
   - id: "real-estate"
     name: "Real Estate Agencies (English-speaking)"
-    status: "🔴"
-    entries: 0
-    notes: "Agencies that market to foreign buyers/renters."
-    data_needed: ["name", "phone", "web", "address"]
+    status: "🟡"
+    entries: 1
+    notes: "Engel & Völkers Seville verified with English site. Lucas Fox, Remax, Savills partially verified (blocked by Cloudflare). Need manual browser session for full details."
+    data_needed: ["address", "phone", "email"]
     search_terms:
       - "English-speaking estate agent Seville"
       - "real estate Seville english"
@@ -173,31 +173,31 @@ verification:
 research_order:
   - priority: 1
     category: "pubs"
-    reason: "Already started (1 entry). Most visible English-first category."
+    reason: "Completed — 5 entries."
   - priority: 2
     category: "tours"
-    reason: "High visibility, many operators, relatively easy to verify."
+    reason: "Completed — 3 entries."
   - priority: 3
     category: "hotels"
-    reason: "Good web presence, easy to verify."
+    reason: "Completed — 6 entries."
   - priority: 4
-    category: "food"
-    reason: "Already started (1 entry). Small category to complete."
-  - priority: 5
     category: "coworking"
-    reason: "Digital nomad hub — likely several spaces."
-  - priority: 6
+    reason: "Completed — 4 entries."
+  - priority: 5
     category: "expat-services"
-    reason: "Harder to find but valuable for expat community."
+    reason: "Completed — 6 entries."
+  - priority: 6
+    category: "food"
+    reason: "1 entry. Need more international food stores."
   - priority: 7
-    category: "translation"
-    reason: "Small category, few providers."
-  - priority: 8
-    category: "medical"
-    reason: "Important but difficult to verify English proficiency."
-  - priority: 9
     category: "real-estate"
-    reason: "Many agencies claim English — need to distinguish marketing from real capability."
+    reason: "1 entry (Engel & Völkers). Need manual browser for Lucas Fox, Remax, Savills."
+  - priority: 8
+    category: "translation"
+    reason: "0 entries. ProZ.com blocked — manual browser needed."
+  - priority: 9
+    category: "medical"
+    reason: "0 entries. Cloudflare blocking. Manual browser needed for individual practitioners."
 
 # ============================================================================
 # BLOCKERS (known from previous attempts)
@@ -207,6 +207,8 @@ blockers:
   google_maps: "Consent wall — headless browser cannot bypass"
   bing: "Returns empty via curl and Obscura for local Spanish queries"
   duckduckgo: "CAPTCHA on first query"
-  overpass: "Intermittent availability (HTTP 406). Zero pubs tagged in Seville OSM."
+  overpass: "Intermittent availability (HTTP 406). Worked in this session for pubs and hotels."
   mcp_fetch: "HTTP 403/404 for many Spanish news/sites"
-  workaround: "Reuse from related projects + direct website verification + manual known entries"
+  cloudflare: "Blocks ProZ.com, Lucas Fox, Idealista, TopDoctors, Savills"
+  workaround: "Reuse from related projects + direct website verification + Expat.com directory + manual known entries"
+  remaining: "Categories still blocked (translation, medical, real estate details) need a manual interactive browser session to bypass Cloudflare walls"

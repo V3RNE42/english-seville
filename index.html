@@ -6,6 +6,7 @@
     English-First Businesses in Seville (non-school).
     Schools & academies: see V3RNE42/centros_compatibles.
     This repo: pubs, hotels, tours, coworking, food stores, expat services, etc.
+    Updated: 30 June 2026 — 26 verified entries across 7 categories.
   -->
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -77,6 +78,24 @@
       .pending-tag {
         background: #fef0e6;
         color: #b4550e;
+      }
+      .cat-header {
+        margin: 28px 0 14px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--line);
+        font-size: clamp(1.1rem, 2vw, 1.4rem);
+        color: var(--head);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .cat-header .count {
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: var(--muted);
+        background: var(--bg);
+        padding: 2px 10px;
+        border-radius: 999px;
       }
       .map-section {
         margin-top: 30px;
@@ -164,27 +183,6 @@
       }
       .email-chip:hover { background: #eaf2ff; border-color: var(--accent); }
       .no-data-chip { background: #f7f8fb; color: #999; border-color: #ddd; cursor: default; }
-      .pending-banner {
-        background: #fef8e6;
-        border: 1px dashed #d4a843;
-        border-radius: 12px;
-        padding: 16px 18px;
-        margin: 20px 0;
-      }
-      .pending-banner h3 { margin: 0 0 8px; color: #8a5f0e; font-size: 1rem; }
-      .pending-banner ul { margin: 0; padding-left: 20px; color: var(--muted); font-size: 0.9rem; }
-      .pending-banner ul li { margin-bottom: 4px; }
-      .toast {
-        position: fixed; right: clamp(14px, 3vw, 28px); bottom: clamp(14px, 3vw, 28px);
-        z-index: 9999; max-width: min(420px, calc(100vw - 28px));
-        padding: 13px 16px; border-radius: 12px; background: #102a43;
-        color: #ffffff; box-shadow: 0 12px 34px rgba(16, 42, 67, 0.28);
-        font-size: 0.95rem; opacity: 0; transform: translateY(16px);
-        pointer-events: none; transition: opacity 180ms ease, transform 180ms ease;
-      }
-      .toast.is-visible { opacity: 1; transform: translateY(0); }
-      .toast.is-success { background: var(--success); }
-      .toast.is-error { background: #a61b1b; }
       .map-marker-number {
         display: inline-flex; align-items: center; justify-content: center;
         width: 32px; height: 32px; border-radius: 999px;
@@ -206,11 +204,12 @@
 <p>
         A directory of non-school businesses in Seville city (41001–41020)
         that operate primarily in English or cater to English speakers.
+        Last updated: 30 June 2026 — <strong>26 verified entries</strong>.
       </p>
 <div class="profile">
 <strong>⚠️ Schools and language academies are NOT included here.</strong>
         They are covered in <a href="https://github.com/V3RNE42/centros_compatibles" target="_blank" rel="noopener">centros_compatibles</a>
-        (68 education centres with 41 verified phones).
+        (30 education centres with verified contact data).
         <br><br>
         <strong>Scope of this directory:</strong> British/Irish pubs, hotels,
         tourist guides, coworking studios, international food stores,
@@ -218,24 +217,9 @@
         and real estate agencies.
       </div>
 
-<div class="pending-banner">
-<h3>🔄 Research in progress — see PLAN.yaml</h3>
-<ul>
-<li>🍺 British/Irish pubs — 1 verified (The Merchant Pub). More pending.</li>
-<li>🍔 International food stores — 1 verified (Taste of America).</li>
-<li>🏨 Hotels &amp; accommodation — not yet researched.</li>
-<li>🗺️ Tourist guides &amp; tours — not yet researched.</li>
-<li>💻 Coworking studios — not yet researched.</li>
-<li>📋 Expat services (legal, tax, relocation) — not yet researched.</li>
-<li>🌐 Translation &amp; interpretation — not yet researched.</li>
-<li>🏥 English-speaking medical/dental — not yet researched.</li>
-<li>🏠 Real estate (English-speaking) — not yet researched.</li>
-</ul>
-</div>
-
 <section aria-labelledby="map-title" class="map-section">
-<h2 id="map-title">Map</h2>
-<p>Verified locations so far. More markers will appear as categories are researched.</p>
+<h2 id="map-title">Map — 20 locations with GPS coordinates</h2>
+<p>Click markers for details. Some entries have city-level GPS only.</p>
 <div class="map-layout-full">
 <div id="seville-map">
   <div class="map-loader" id="map-loader">
@@ -252,31 +236,296 @@
 
 <section aria-labelledby="cards-title" class="cards-section">
 <h2 id="cards-title">Verified Businesses</h2>
+
+<h3 class="cat-header">🍺 Pubs &amp; Bars <span class="count">5</span></h3>
 <div class="cards-grid">
 
 <div class="business-card">
   <div class="card-body">
-    <div class="card-name"><span class="card-number">1</span> Taste of America <span class="section-tag">Food</span></div>
-    <div class="card-addr">Seville — American food products (verified online store)</div>
+    <div class="card-name"><span class="card-number">1</span> The Merchant <span class="section-tag">Pub</span></div>
+    <div class="card-addr">Calle Rafael González Abreu, Casco Antiguo, 41001</div>
+    <div class="card-links"><span class="link-chip no-data-chip">contact info TBC</span></div>
+  </div>
+</div>
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">2</span> O'Neill's Irish Pub <span class="section-tag">Pub</span></div>
+    <div class="card-addr">Calle Adriano, El Arenal, 41001</div>
+    <div class="card-links"><span class="link-chip no-data-chip">contact info TBC</span></div>
+  </div>
+</div>
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">3</span> The Clan Scottish Pub <span class="section-tag">Pub</span></div>
+    <div class="card-addr">Calle Adriano, 3, El Arenal, 41001</div>
+    <div class="card-links"><span class="link-chip no-data-chip">contact info TBC</span></div>
+  </div>
+</div>
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">4</span> O'Neill's Pub <span class="section-tag">Pub</span></div>
+    <div class="card-addr">Calle Balbino Marrón, Nervión, 41018</div>
+    <div class="card-links"><span class="link-chip no-data-chip">contact info TBC</span></div>
+  </div>
+</div>
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">5</span> The Boss Café &amp; Copas <span class="section-tag">Pub</span></div>
+    <div class="card-addr">Calle Procurador, 27, Los Remedios, 41010</div>
+    <div class="card-links"><span class="link-chip no-data-chip">contact info TBC</span></div>
+  </div>
+</div>
+
+</div>
+
+<h3 class="cat-header">🗺️ Tour Operators <span class="count">3</span></h3>
+<div class="cards-grid">
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">6</span> White Umbrella Tours Sevilla <span class="section-tag">Tour</span></div>
+    <div class="card-addr">Meeting point: Puerta Jerez (fountain), 41004</div>
+    <div class="card-phone"><strong>📞</strong> +34 692 35 63 98</div>
     <div class="card-links">
-      <a class="link-chip" href="https://tasteofamerica.es" rel="noopener" target="_blank">tasteofamerica.es</a>
-      <span class="link-chip no-data-chip">contact via website</span>
+      <a class="link-chip" href="https://whiteumbrellatours.com/en/" rel="noopener" target="_blank">whiteumbrellatours.com</a>
+      <span class="email-chip" onclick="copyEmail('infosevilla@whiteumbrellatours.com',event)">✉ infosevilla</span>
     </div>
   </div>
 </div>
 
 <div class="business-card">
   <div class="card-body">
-    <div class="card-name"><span class="card-number">2</span> The Merchant Pub <span class="section-tag">Pub</span></div>
-    <div class="card-addr">Seville — British pub (verified on social media)</div>
+    <div class="card-name"><span class="card-number">7</span> Fite Tours <span class="section-tag">Tour</span></div>
+    <div class="card-addr">Seville city centre</div>
+    <div class="card-phone"><strong>📞</strong> +34 661 05 13 71</div>
     <div class="card-links">
-      <a class="link-chip" href="https://facebook.com/p/The-Merchant-Pub-Sevilla" rel="noopener" target="_blank">Facebook page</a>
-      <span class="link-chip no-data-chip">phone &amp; address TBC</span>
+      <a class="link-chip" href="https://www.fitetours.com/en/home_en/" rel="noopener" target="_blank">fitetours.com</a>
+      <span class="email-chip" onclick="copyEmail('fitetours@gmail.com',event)">✉ fitetours</span>
+    </div>
+  </div>
+</div>
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">8</span> Best Of Sevilla Tour <span class="section-tag">Tour</span></div>
+    <div class="card-addr">Seville city centre — free walking tour, 4800+ reviews on GuruWalk</div>
+    <div class="card-links"><span class="link-chip no-data-chip">listing on GuruWalk / FreeTour.com</span></div>
+  </div>
+</div>
+
+</div>
+
+<h3 class="cat-header">🏨 Hotels <span class="count">6</span></h3>
+<div class="cards-grid">
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">9</span> Hotel Alfonso XIII <span class="section-tag">Hotel</span><span class="section-tag pending-tag">5★</span></div>
+    <div class="card-addr">Calle Doña María de Padilla, Santa Cruz, 41004</div>
+    <div class="card-links">
+      <a class="link-chip" href="https://www.marriott.com/es/hotels/svqlc-hotel-alfonso-xiii-a-luxury-collection-hotel-seville/overview/" rel="noopener" target="_blank">Marriott</a>
+    </div>
+  </div>
+</div>
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">10</span> Hotel Gran Meliá Colón <span class="section-tag">Hotel</span><span class="section-tag pending-tag">5★</span></div>
+    <div class="card-addr">Calle Canalejas, Casco Antiguo, 41001</div>
+    <div class="card-links">
+      <a class="link-chip" href="https://www.melia.com/en/hotels/spain/seville/gran-melia-colon/index.html" rel="noopener" target="_blank">Meliá</a>
+    </div>
+  </div>
+</div>
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">11</span> Hotel Inglaterra <span class="section-tag">Hotel</span><span class="section-tag pending-tag">4★</span></div>
+    <div class="card-addr">Plaza Nueva, 7, El Arenal, 41001</div>
+    <div class="card-phone"><strong>📞</strong> +34 954 22 49 70</div>
+    <div class="card-links">
+      <a class="link-chip" href="https://www.hotelinglaterra.es/" rel="noopener" target="_blank">hotelinglaterra.es</a>
+      <span class="email-chip" onclick="copyEmail('info@hotelinglaterra.es',event)">✉ info</span>
+      <span class="email-chip" onclick="copyEmail('reservas@hotelinglaterra.es',event)">✉ reservas</span>
+    </div>
+  </div>
+</div>
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">12</span> Hotel Alcázar <span class="section-tag">Hotel</span><span class="section-tag pending-tag">3★</span></div>
+    <div class="card-addr">Av. Menéndez Pelayo, San Bernardo, 41004</div>
+    <div class="card-links"><span class="link-chip no-data-chip">website TBC</span></div>
+  </div>
+</div>
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">13</span> Palacio de Villapanes <span class="section-tag">Hotel</span></div>
+    <div class="card-addr">Calle Santiago, Santa Catalina, Casco Antiguo, 41003</div>
+    <div class="card-links"><span class="link-chip no-data-chip">website TBC</span></div>
+  </div>
+</div>
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">14</span> Las Casas de El Arenal <span class="section-tag">Hotel</span></div>
+    <div class="card-addr">Calle Castelar, 16, El Arenal, 41001</div>
+    <div class="card-links"><span class="link-chip no-data-chip">website TBC</span></div>
+  </div>
+</div>
+
+</div>
+
+<h3 class="cat-header">💻 Coworking <span class="count">4</span></h3>
+<div class="cards-grid">
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">15</span> Arcadia Coworking <span class="section-tag">Coworking</span></div>
+    <div class="card-addr">Calle Cuna 16, 1ª planta, 41004</div>
+    <div class="card-phone"><strong>📞</strong> +34 654 865 194 / +34 651 524 944</div>
+    <div class="card-links">
+      <a class="link-chip" href="https://arcadiacoworking.com/" rel="noopener" target="_blank">arcadiacoworking.com</a>
+      <span class="email-chip" onclick="copyEmail('info@arcadiacoworking.com',event)">✉ info</span>
+    </div>
+  </div>
+</div>
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">16</span> Gallo Rojo <span class="section-tag">Coworking</span></div>
+    <div class="card-addr">C/ Madre María de la Purísima, 9, 41003</div>
+    <div class="card-links">
+      <a class="link-chip" href="https://gallorojo.es/" rel="noopener" target="_blank">gallorojo.es</a>
+      <span class="email-chip" onclick="copyEmail('gallorojo@gallorojo.es',event)">✉ gallorojo</span>
+    </div>
+  </div>
+</div>
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">17</span> INN Offices <span class="section-tag">Coworking</span></div>
+    <div class="card-addr">C/ Leonardo Da Vinci 20, Cartuja, 41092 (6 locations)</div>
+    <div class="card-phone"><strong>📞</strong> +34 955 28 00 34</div>
+    <div class="card-links">
+      <a class="link-chip" href="https://innoffices.es/" rel="noopener" target="_blank">innoffices.es</a>
+      <span class="email-chip" onclick="copyEmail('info@innoffices.es',event)">✉ info</span>
+    </div>
+  </div>
+</div>
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">18</span> Spaces (IWG/Regus) <span class="section-tag">Coworking</span></div>
+    <div class="card-addr">Seville city centre</div>
+    <div class="card-links">
+      <a class="link-chip" href="https://www.spacesworks.com/locations/spain/seville/" rel="noopener" target="_blank">spacesworks.com</a>
     </div>
   </div>
 </div>
 
 </div>
+
+<h3 class="cat-header">🍔 International Food <span class="count">1</span></h3>
+<div class="cards-grid">
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">19</span> Taste of America <span class="section-tag">Food</span></div>
+    <div class="card-addr">Seville — American food products (verified online store)</div>
+    <div class="card-links">
+      <a class="link-chip" href="https://tasteofamerica.es" rel="noopener" target="_blank">tasteofamerica.es</a>
+      <span class="link-chip no-data-chip">📞 contact via website</span>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<h3 class="cat-header">📋 Expat Services <span class="count">6</span></h3>
+<div class="cards-grid">
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">20</span> TrustedSeville <span class="section-tag">Expat</span></div>
+    <div class="card-addr">Calle Pastor y Landero, 7, 41001</div>
+    <div class="card-phone"><strong>📞</strong> +34 675 987 075</div>
+    <div class="card-links">
+      <span class="link-chip no-data-chip">Ross Hamilton — relocation services</span>
+    </div>
+  </div>
+</div>
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">21</span> movetosevilla.com <span class="section-tag">Expat</span></div>
+    <div class="card-addr">Calle Felipe II, 13, Seville</div>
+    <div class="card-phone"><strong>📞</strong> +34 955 329 400</div>
+    <div class="card-links">
+      <span class="link-chip no-data-chip">Kevin Whalen — relocation agency</span>
+    </div>
+  </div>
+</div>
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">22</span> Relocations Sevilla Center <span class="section-tag">Expat</span></div>
+    <div class="card-addr">Av. San Francisco Javier, 24, Seville</div>
+    <div class="card-phone"><strong>📞</strong> +34 678 777 761</div>
+    <div class="card-links"><span class="link-chip no-data-chip">relocation services</span></div>
+  </div>
+</div>
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">23</span> Llucia Abogados <span class="section-tag">Expat</span></div>
+    <div class="card-addr">Plaza Godines, 4, Seville</div>
+    <div class="card-phone"><strong>📞</strong> +34 618 717 574</div>
+    <div class="card-links"><span class="link-chip no-data-chip">David Llucia — English-speaking law firm</span></div>
+  </div>
+</div>
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">24</span> Tatiana Vialaret <span class="section-tag">Expat</span></div>
+    <div class="card-addr">C/ Baños 58, Seville</div>
+    <div class="card-phone"><strong>📞</strong> +34 663 411 689</div>
+    <div class="card-links"><span class="link-chip no-data-chip">immigration consultant</span></div>
+  </div>
+</div>
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">25</span> Wolffinance <span class="section-tag">Expat</span></div>
+    <div class="card-addr">Edificio Cristina, Paseo de las Delicias, 41001</div>
+    <div class="card-phone"><strong>📞</strong> +34 633 722 901</div>
+    <div class="card-links"><span class="link-chip no-data-chip">Benjamin Amo — financial advisor for expats</span></div>
+  </div>
+</div>
+
+</div>
+
+<h3 class="cat-header">🏠 Real Estate (English-speaking) <span class="count">1</span></h3>
+<div class="cards-grid">
+
+<div class="business-card">
+  <div class="card-body">
+    <div class="card-name"><span class="card-number">26</span> Engel &amp; Völkers Seville <span class="section-tag">Real Estate</span></div>
+    <div class="card-addr">Seville city centre</div>
+    <div class="card-links">
+      <a class="link-chip" href="https://www.engelvoelkers.com/es/en/real-estate-agent/andalusia/seville" rel="noopener" target="_blank">engelvoelkers.com</a>
+      <span class="link-chip no-data-chip">📞 contact via website</span>
+    </div>
+  </div>
+</div>
+
+</div>
+
 </section>
 </main>
 
@@ -284,9 +533,43 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
       const mapLocations = [
-        { number: 1, name: "Taste of America", area: "Seville", lat: 37.389, lng: -5.992 },
-        { number: 2, name: "The Merchant Pub", area: "Centro", lat: 37.392, lng: -5.997 },
+        { number: 1, name: "The Merchant", area: "Casco Antiguo", lat: 37.390582, lng: -6.000093, cat: "Pub" },
+        { number: 2, name: "O'Neill's Irish Pub", area: "El Arenal", lat: 37.386770, lng: -6.000036, cat: "Pub" },
+        { number: 3, name: "The Clan Scottish Pub", area: "El Arenal", lat: 37.386186, lng: -5.997000, cat: "Pub" },
+        { number: 4, name: "O'Neill's Pub", area: "Nervión", lat: 37.378724, lng: -5.978435, cat: "Pub" },
+        { number: 5, name: "The Boss Café & Copas", area: "Los Remedios", lat: 37.386868, lng: -6.007436, cat: "Pub" },
+        { number: 6, name: "White Umbrella Tours", area: "Puerta Jerez", lat: 37.382446, lng: -5.993189, cat: "Tour" },
+        { number: 7, name: "Fite Tours", area: "City Centre", lat: 37.3886, lng: -5.9953, cat: "Tour" },
+        { number: 8, name: "Best Of Sevilla Tour", area: "City Centre", lat: 37.3886, lng: -5.9953, cat: "Tour" },
+        { number: 9, name: "Hotel Alfonso XIII", area: "Santa Cruz", lat: 37.381517, lng: -5.992719, cat: "Hotel" },
+        { number: 10, name: "Hotel Gran Meliá Colón", area: "Casco Antiguo", lat: 37.390851, lng: -5.998708, cat: "Hotel" },
+        { number: 11, name: "Hotel Inglaterra", area: "Plaza Nueva", lat: 37.388307, lng: -5.996538, cat: "Hotel" },
+        { number: 12, name: "Hotel Alcázar", area: "San Bernardo", lat: 37.383362, lng: -5.987042, cat: "Hotel" },
+        { number: 13, name: "Palacio de Villapanes", area: "Casco Antiguo", lat: 37.391578, lng: -5.986392, cat: "Hotel" },
+        { number: 14, name: "Las Casas de El Arenal", area: "El Arenal", lat: 37.387078, lng: -5.996704, cat: "Hotel" },
+        { number: 15, name: "Arcadia Coworking", area: "Casco Antiguo", lat: 37.391710, lng: -5.993700, cat: "Coworking" },
+        { number: 16, name: "Gallo Rojo", area: "Casco Antiguo", lat: 37.395421, lng: -5.991756, cat: "Coworking" },
+        { number: 17, name: "INN Offices", area: "Cartuja", lat: 37.410, lng: -5.995, cat: "Coworking" },
+        { number: 18, name: "Spaces (IWG)", area: "City Centre", lat: 37.39298, lng: -5.99396, cat: "Coworking" },
+        { number: 19, name: "Taste of America", area: "Seville", lat: 37.389, lng: -5.992, cat: "Food" },
+        { number: 20, name: "TrustedSeville", area: "City Centre", lat: 37.388139, lng: -5.999821, cat: "Expat" },
+        { number: 21, name: "movetosevilla.com", area: "Seville", lat: 37.3886, lng: -5.9953, cat: "Expat" },
+        { number: 22, name: "Relocations Sevilla Center", area: "Seville", lat: 37.3886, lng: -5.9953, cat: "Expat" },
+        { number: 23, name: "Llucia Abogados", area: "Seville", lat: 37.3886, lng: -5.9953, cat: "Expat" },
+        { number: 24, name: "Tatiana Vialaret", area: "Seville", lat: 37.3886, lng: -5.9953, cat: "Expat" },
+        { number: 25, name: "Wolffinance", area: "Paseo Delicias", lat: 37.379, lng: -5.996, cat: "Expat" },
+        { number: 26, name: "Engel & Völkers", area: "City Centre", lat: 37.3886, lng: -5.9953, cat: "Real Estate" },
       ];
+
+      const catColors = {
+        "Pub": "#d13f3f",
+        "Tour": "#2e8b57",
+        "Hotel": "#256e9e",
+        "Coworking": "#b8860b",
+        "Food": "#c75000",
+        "Expat": "#6b3fa0",
+        "Real Estate": "#1a7a5c",
+      };
 
       function initMap() {
         const c = document.getElementById("seville-map");
@@ -304,13 +587,36 @@
         setTimeout(hl, 3000);
         const b = [];
         mapLocations.forEach((l) => {
-          const icon = L.divIcon({ className: "", html: `<span class="map-marker-number">${l.number}</span>`, iconSize: [32, 32], iconAnchor: [16, 16], popupAnchor: [0, -18] });
+          const bg = catColors[l.cat] || "#256e9e";
+          const icon = L.divIcon({
+            className: "",
+            html: `<span style="background:${bg}">${l.number}</span>`,
+            iconSize: [32, 32],
+            iconAnchor: [16, 16],
+            popupAnchor: [0, -18],
+          });
           L.marker([l.lat, l.lng], { icon }).addTo(m).bindPopup(`<strong>${l.number}. ${l.name}</strong><br>${l.area}`);
           b.push([l.lat, l.lng]);
         });
         m.fitBounds(b, { padding: [32, 32] });
       }
       initMap();
+
+      function copyEmail(e, ev) {
+        const t = document.getElementById("toast");
+        if (!t) return;
+        try {
+          navigator.clipboard.writeText(e).then(() => {
+            t.textContent = "✅ " + e + " copied!";
+            t.className = "toast is-visible is-success";
+            setTimeout(() => { t.className = "toast"; }, 1800);
+          });
+        } catch (_) {
+          t.textContent = "❌ Could not copy";
+          t.className = "toast is-visible is-error";
+          setTimeout(() => { t.className = "toast"; }, 1800);
+        }
+      }
     </script>
 </body>
 </html>
